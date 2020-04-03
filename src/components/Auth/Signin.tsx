@@ -1,14 +1,17 @@
 import React from 'react';
+import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
+import APIURL from '../../helpers/environment';
+// import Snackbar from './Snackbar';
 
 // PROPS TYPE ALIAS
 type AcceptedProps = {
-    updateToken: string
+    updateToken: (newToken: string) => void
 };
   
 // STATE TYPE ALIAS
 type SigninState = {
-    email: '',
-    password: ''
+    email: string,
+    password: string
 };
 
 class Signin extends React.Component<AcceptedProps, SigninState>{
@@ -21,7 +24,7 @@ class Signin extends React.Component<AcceptedProps, SigninState>{
       }
 
     // HANDLE SUBMIT  
-    handleSubmit = (event: React.FormEvent<HTMLInputElement>) => {
+    handleSubmit = (event: any) => {
         event.preventDefault();
         fetch(`${APIURL}/user/signin`, {
             method: 'POST',
@@ -33,26 +36,48 @@ class Signin extends React.Component<AcceptedProps, SigninState>{
             (response) => response.json()
         ) .then((data) => {
             console.log(data);
-            this.props.updateToken = (data.sessionToken);
+            this.props.updateToken(data.sessionToken)
         })
+    }
 
     render(){
         return(
             <div className='signin'>
             <h1>Signin</h1>
-            <form onSubmit={this.handleSubmit}>
-                <div>
-                    <label htmlFor='email'>Email</label>
-                    <input placeholder='user@email.com' onChange = {(e) => setState(email: e.target.value)} name='email' value={this.state.email} />
-                </div>
-                <div>
-                    <label htmlFor='password'>Password</label>
-                    <input placeholder='Password' type='password' onChange={(e) => setState(password: e.target.value)} name='password' value={this.state.password} />
-                </div>
-                <button className='signinUp'type='submit'>Signin</button>
-            </form>
+            <Form onSubmit={(e) => this.handleSubmit(e)}>
+                <FormGroup>
+                    <Label htmlFor='email'>Email</Label>
+                    <Input placeholder='Email' type='email' onChange={
+                        (e: React.FormEvent<HTMLInputElement>) => {
+                        const emailEventElement = e.target as HTMLInputElement;
+                        const emailValue = emailEventElement.value
+                        this.setState({
+                            email: emailValue
+                        })  
+                        }
+                    }
+                    name='email' value={this.state.email}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor='password'>Password</Label>
+                    <Input placeholder='Password' type='password' onChange={
+                        (e: React.FormEvent<HTMLInputElement>) => {
+                        const eventElement = e.target as HTMLInputElement;
+                        const passValue = eventElement.value
+                        this.setState({
+                            password: passValue
+                        })  
+                        }
+                    }
+                    name='password' value={this.state.password}
+                    />
+                </FormGroup>
+                <Button className='signinUp'type='submit'>Signin</Button>
+            </Form>
         </div>
         )
     }
 }
+
 export default Signin;

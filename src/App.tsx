@@ -3,18 +3,13 @@ import './App.css';
 import Auth from './components/Auth/Auth';
 import Home from './components/Home';
 
-// PROPS TYPE ALIAS
-type TokenProps = {
-  token: string
-};
-
 // STATE TYPE ALIAS
 type TokenState = {
   sessionToken: string
 };
 
-class App extends React.Component<TokenProps, TokenState> {
-  constructor(props: TokenProps){
+class App extends React.Component<{}, TokenState> {
+  constructor(props: {}){
     super(props);
     this.state = {
       sessionToken: ''
@@ -53,9 +48,9 @@ class App extends React.Component<TokenProps, TokenState> {
   // PROTECTED VIEWS
     protectedViews(){
       if (this.state.sessionToken === localStorage.getItem('token')) {
-        return(<Home token={this.state.sessionToken} clearToken={this.clearToken} />)
+        return(<Home token={this.state.sessionToken} clearToken={this.clearToken.bind(this)} />)
       } else {
-        return(<Auth updateToken={this.updateToken} />)
+        return(<Auth updateToken={this.updateToken.bind(this)} />)
       }
     }
 
