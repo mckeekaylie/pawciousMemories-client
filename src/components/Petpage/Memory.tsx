@@ -1,6 +1,27 @@
 import React from 'react';
 
-class Memory extends React.Component {
+// PROPS TYPE ALIAS
+type AcceptedProps = {
+    updateToken: (newToken: string) => void
+};
+  
+// STATE TYPE ALIAS
+type SignupState = {
+    email: string,
+    password: string,
+    role: string
+};
+
+class Memory extends React.Component<AcceptedProps, SignupState> {
+    constructor(props: AcceptedProps){
+        super(props);
+        this.state = {
+          email: '',
+          password: '',
+          role: 'user'
+        }
+      }
+      
     render(){
         return(
             <div>
