@@ -1,4 +1,6 @@
 import React from 'react';
+// import Petinfo from './Petinfo';
+
 
 // PROPS TYPE ALIAS
 type AcceptedProps = {
@@ -21,11 +23,14 @@ class Petpage extends React.Component<AcceptedProps, SignupState> {
           role: 'user'
         }
       }
+
+      componentDidMount() {
+          
+      }
       
     render(){
         return(
             <div>
-                
             </div>
         )
     }
