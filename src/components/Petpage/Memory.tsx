@@ -5,6 +5,10 @@ import {Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, Mo
 // PROPS TYPE ALIAS
 type AcceptedProps = {
     token: any
+<<<<<<< HEAD
+=======
+    id: any
+>>>>>>> e308abae3c2ea1bd7f40da0fef344d4519c944fd
 };
   
 // STATE TYPE ALIAS
