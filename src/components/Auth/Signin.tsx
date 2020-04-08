@@ -43,7 +43,7 @@ class Signin extends React.Component<AcceptedProps, SigninState>{
     render(){
         return(
             <div className='signin'>
-            <h1>Signin</h1>
+            <h1>Login</h1>
             <Form onSubmit={(e) => this.handleSubmit(e)}>
                 <FormGroup>
                     <Label htmlFor='email'>Email</Label>
@@ -73,7 +73,7 @@ class Signin extends React.Component<AcceptedProps, SigninState>{
                     name='password' value={this.state.password}
                     />
                 </FormGroup>
-                <Button className='signinUp'type='submit'>Signin</Button>
+                <Button className='signinUp'type='submit'>Login</Button>
             </Form>
         </div>
         )
