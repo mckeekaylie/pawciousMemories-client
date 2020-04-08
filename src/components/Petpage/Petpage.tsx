@@ -1,31 +1,34 @@
 import React from 'react';
+import Petinfo from './Petinfo';
+import Sitebar from '../Sitebar';
+import Photogallery from '../Petpage/Photogallery';
+import Memory from '../Petpage/Memory';
+
 
 // PROPS TYPE ALIAS
 type AcceptedProps = {
-    updateToken: (newToken: string) => void
-};
-  
-// STATE TYPE ALIAS
-type SignupState = {
-    email: string,
-    password: string,
-    role: string
+    id: any
+    token: any
+    state: any
+    match: any
+    // clearToken: any
 };
 
-class Petpage extends React.Component<AcceptedProps, SignupState> {
+
+class Petpage extends React.Component<AcceptedProps, {}> {
     constructor(props: AcceptedProps){
         super(props);
         this.state = {
-          email: '',
-          password: '',
-          role: 'user'
         }
       }
       
     render(){
         return(
             <div>
-                
+                {/* <Sitebar clearToken={this.props.clearToken}/> */}
+                <Petinfo id={this.props.match.params.petId} token={this.props.token} />
+                <Memory id={this.props.match.params.petId} token={this.props.token} />
+                <Photogallery id={this.props.match.params.petId} token={this.props.token} />
             </div>
         )
     }
