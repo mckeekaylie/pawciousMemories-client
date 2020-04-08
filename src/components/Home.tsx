@@ -4,6 +4,7 @@ import {Row, Card, CardImg, CardText, CardBody,
 import Sitebar from './Sitebar'
 import Petinfo from '../components/Petpage/Petinfo';
 import APIURL from '../helpers/environment';
+import Memory from '../components/Petpage/Memory'
 
 // PROPS TYPE ALIAS
 type TokenProps = {
@@ -68,6 +69,7 @@ class Home extends React.Component<TokenProps, HomeState> {
                 <h1>Home page</h1>
                 {/* <Petinfo token={this.props.token}/> */}
                 {petMapper}
+                <Memory token={this.props.token}/>
                 
             </div>
         )
