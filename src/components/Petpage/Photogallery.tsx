@@ -2,7 +2,8 @@ import React from 'react';
 
 // PROPS TYPE ALIAS
 type AcceptedProps = {
-    updateToken: (newToken: string) => void
+    token: any
+    id: any
 };
   
 // STATE TYPE ALIAS
