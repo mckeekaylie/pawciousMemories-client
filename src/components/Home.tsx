@@ -1,9 +1,12 @@
 import React from 'react';
 import {Row, Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button} from 'reactstrap';
+    CardTitle, CardDeck, CardSubtitle, Button} from 'reactstrap';
 import Sitebar from './Sitebar'
+import Petpage from '../components/Petpage/Petpage';
 import Petinfo from '../components/Petpage/Petinfo';
 import APIURL from '../helpers/environment';
+import { BrowserRouter, withRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
+import { timingSafeEqual } from 'crypto';
 
 // PROPS TYPE ALIAS
 type TokenProps = {
@@ -14,6 +17,8 @@ type TokenProps = {
 type HomeState = {
     token: ''
     pet: Array<any>
+    showPetPage: boolean
+    petId: string
 }
 
 class Home extends React.Component<TokenProps, HomeState> {
@@ -21,7 +26,9 @@ class Home extends React.Component<TokenProps, HomeState> {
         super(props)
         this.state = {
           token: '',
-          pet: []
+          pet: [],
+          showPetPage: false,
+          petId: ''
         }
       }
       componentDidMount() {
@@ -49,17 +56,35 @@ class Home extends React.Component<TokenProps, HomeState> {
                 })
         }
 
+        petPageToggler(id: any) {
+            if(this.state.showPetPage === false){
+                this.setState({
+                    showPetPage: true,
+                    petId: id
+                })
+            }
+
+            if(this.state.showPetPage === true){
+                this.setState({
+                    showPetPage: false,
+                    petId: id
+                })
+            }
+        }
+
 
     render(){
         console.log(this.state.pet);
         const petMapper = this.state.pet.map(pet => 
+            <>
             <Card>
                 <CardImg top width="100%" src={pet.file} alt="Card image cap" />
                 <CardBody>
                     <CardTitle>{pet.name}</CardTitle>
-                    <Button>Button</Button>
+                    <Button onClick={(e) => this.petPageToggler(pet.id)}>Button</Button>
                 </CardBody>
             </Card>
+            </>
         )
 
         return(
@@ -67,8 +92,16 @@ class Home extends React.Component<TokenProps, HomeState> {
                 <Sitebar clearToken={this.props.clearToken} />
                 <h1>Home page</h1>
                 {/* <Petinfo token={this.props.token}/> */}
-                {petMapper}
-                
+                <CardDeck>
+                    {petMapper}
+                </CardDeck>
+
+                {this.state.showPetPage ?
+                    <>
+                        <Redirect to={`/petpage/${this.state.petId}`} />
+                    </>
+                    : <Redirect to='/' />
+                } 
             </div>
         )
     }

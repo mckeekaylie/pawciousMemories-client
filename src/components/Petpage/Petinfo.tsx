@@ -1,14 +1,16 @@
 import React from 'react';
 import APIURL from '../../helpers/environment'
+import Petpage from './Petpage';
 
 // PROPS TYPE ALIAS
 type AcceptedProps = {
     token: any
+    id: any
 };
   
 // STATE TYPE ALIAS
 type PetinfoState = {
-    pet: [],
+    pet: any,
     modal: boolean
 };
 
@@ -24,7 +26,7 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
     componentDidMount = () => {
         const fetchPetinfo = () => {
             const that = this;
-            fetch(`${APIURL}/petinfo/pet`, { 
+            fetch(`${APIURL}/petinfo/pet/${this.props.id}`, { 
                 method: 'GET',
                 headers: new Headers({
                     'Content-Type': 'application/json',
@@ -42,9 +44,6 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
 
         fetchPetinfo();
 
-        const assignValues = () => {
-            // const petName = this.state.pet.map(pet => pet.name)
-        }
 
         // const editPetinfo = (pet: any) => {
         //     this.setState({
@@ -69,9 +68,14 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
     render(){
         return(
             <div>
-                <p></p>
+                <h1>{this.state.pet.name}</h1>
+                <img src={this.state.pet.file}/>
                 <ul>
-                    {/* {this.state.pet.map(pet => pet.name)} */}
+                    <li>Species: {this.state.pet.species}</li>
+                    <li>Breed: {this.state.pet.breed}</li>
+                    <li>Date of Birth: {this.state.pet.dob}</li>
+                    <li>Date of Adoption: {this.state.pet.dateOfAdoption}</li>
+                    <li>Adopt or Foster: {this.state.pet.adoptOrFoster}</li>
                 </ul>
             </div>
         )

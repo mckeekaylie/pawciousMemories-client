@@ -2,17 +2,22 @@ import React, {Component} from 'react';
 import './App.css';
 import Auth from './components/Auth/Auth';
 import Home from './components/Home';
+import Petpage from './components/Petpage/Petpage';
+import { useLocation, BrowserRouter, Router, Route, Switch } from 'react-router-dom';
+
 
 // STATE TYPE ALIAS
 type TokenState = {
-  sessionToken: string
+  sessionToken: string,
+  location: boolean
 };
 
 class App extends React.Component<{}, TokenState> {
   constructor(props: {}){
     super(props);
     this.state = {
-      sessionToken: ''
+      sessionToken: '',
+      location: false
     }
   }
 
@@ -45,22 +50,22 @@ class App extends React.Component<{}, TokenState> {
       })
     }
 
-  // PROTECTED VIEWS
-    protectedViews(){
-      if (this.state.sessionToken === localStorage.getItem('token')) {
-        return(<Home token={this.state.sessionToken} clearToken={this.clearToken.bind(this)} />)
-      } else {
-        return(<Auth updateToken={this.updateToken.bind(this)} />)
-      }
-    }
+
 
   render(){
-    return (
-      <div>
-        {this.protectedViews()}
-      </div>
-  
-    );
+    console.log(this.state.sessionToken)
+    if(this.state.sessionToken === localStorage.getItem('token')){
+      return (
+        <div>
+          <Switch>
+            <Route exact path="/" render={(TokenProps) => <Home {...TokenProps} token={this.state.sessionToken} clearToken={this.clearToken.bind(this)} />} />
+            <Route exact path="/petpage/:petId" render={(AcceptedProps) => <Petpage {...AcceptedProps} token={this.state.sessionToken} id={null} state={null} />} />
+          </Switch>
+        </div>
+      );
+    } else {
+      return(<Auth updateToken={this.updateToken.bind(this)} />)
+    }
   }
 }
 export default App;
