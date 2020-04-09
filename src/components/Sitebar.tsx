@@ -6,6 +6,9 @@ import {
     NavItem
 } from 'reactstrap';
 
+import './Sitebar.css'
+import logoutImg from '../assets/logout.svg'
+
 type TokenProps = {
     clearToken: any
 };
@@ -16,9 +19,9 @@ class Sitebar extends React.Component<TokenProps, {}>{
             <div>
                 <Navbar className='nav' light expand='md'>
                     <NavbarBrand href='/' className='brand'>Pawcious Memories</NavbarBrand>
-                        <Nav className='ml-auto' navbar>
-                            <NavItem className='logout' onClick={this.props.clearToken}>> Logout</NavItem>
-                        </Nav>
+                    
+                        <NavItem className='logout' onClick={this.props.clearToken}><img id='logoutImg' src={logoutImg}/></NavItem>
+                    
                 </Navbar>
             </div>
         )

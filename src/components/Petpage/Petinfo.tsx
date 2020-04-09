@@ -1,6 +1,7 @@
 import React from 'react';
 import APIURL from '../../helpers/environment'
-import Petpage from './Petpage';
+import './Petinfo.css'
+import { Container, Row, Col } from 'reactstrap';
 
 // PROPS TYPE ALIAS
 type AcceptedProps = {
@@ -67,17 +68,24 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
 
     render(){
         return(
-            <div>
-                <h1>{this.state.pet.name}</h1>
-                <img src={this.state.pet.file}/>
-                <ul>
-                    <li>Species: {this.state.pet.species}</li>
-                    <li>Breed: {this.state.pet.breed}</li>
-                    <li>Date of Birth: {this.state.pet.dob}</li>
-                    <li>Date of Adoption: {this.state.pet.dateOfAdoption}</li>
-                    <li>Adopt or Foster: {this.state.pet.adoptOrFoster}</li>
-                </ul>
-            </div>
+            <Container className='petInfo'>
+                <Row>
+                    <Col xs="3">
+                        <img id='avatar' src={this.state.pet.file}/>
+                    </Col>
+
+                    <Col xs="6" id='infoCol'>
+                        <h1>{this.state.pet.name}</h1>
+                        <ul>
+                            <li>Species: {this.state.pet.species}</li>
+                            <li>Breed: {this.state.pet.breed}</li>
+                            <li>Date of Birth: {this.state.pet.dob}</li>
+                            <li>Date of Adoption: {this.state.pet.dateOfAdoption}</li>
+                            <li>Adopt or Foster: {this.state.pet.adoptOrFoster}</li>
+                        </ul>
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 }

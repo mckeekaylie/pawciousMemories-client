@@ -58,8 +58,8 @@ class App extends React.Component<{}, TokenState> {
       return (
         <div>
           <Switch>
-            <Route exact path="/" render={(TokenProps) => <Home {...TokenProps} token={this.state.sessionToken} clearToken={this.clearToken.bind(this)} />} />
-            <Route exact path="/petpage/:petId" render={(AcceptedProps) => <Petpage {...AcceptedProps} token={this.state.sessionToken} id={null} state={null} />} />
+            <Route exact path="/" render={(TokenProps) => <Home {...TokenProps} token={this.state.sessionToken} clearToken={this.clearToken.bind(this)} modalOff={null} />} />
+            <Route exact path="/petpage/:petId" render={(AcceptedProps) => <Petpage {...AcceptedProps} token={this.state.sessionToken} clearToken={this.clearToken.bind(this)} id={null} state={null} />} />
           </Switch>
         </div>
       );

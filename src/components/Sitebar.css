@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Rochester&display=swap');
+
+.brand {
+    font-family: Rochester, cursive;
+    text-decoration: none;
+    font-size: 2em;
+    color: black;
+    padding-left: 1em;
+}
+
+.nav {
+    top: 0;
+    background-color: #88C7E6;
+    padding: 1em;
+    position: fixed;
+    margin: 0;
+    width: 100vw;
+    z-index: 100;
+}
+
+/* .nav li {
+    display: block;
+    padding-right: 5em;
+} */
+
+#logoutImg {
+    width: 5%;
+}
+
+#logoutImg:hover {
+    cursor: pointer;
+}
