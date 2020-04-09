@@ -1,28 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
+/* ALL ELEMENTS */
 .home {
-    margin-top: 6em;
+    margin-top: 4em;
 }
 
+/* PAGE TOP */
 .home h1 {
     text-align: center;
     font-family: Rochester, cursive;
+    font-size: 5em;
 }
 
-.addPet {
-    
+.btn {
+    display: block;
+    margin: auto;
+    margin-bottom: 2em;
+    background-color: #7165B1;
+    border: none;
+}
+
+.btn:hover {
+    background-color: #37539B;
+    border: none;
+}
+
+/* PET SECTION */
+.petCol {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 3em;
+}
+
+.petCard {
+    height: 20em;
+    border: none;
 }
 
 .card {    
     text-align: center;
-    border: none;
 }
 
 .card:hover {
     cursor: pointer;
 }
 
-.cardTitle {
+.card-title {
     font-family: Montserrat, sans-serif;
     font-weight: 700;
+    top: 0;
 }

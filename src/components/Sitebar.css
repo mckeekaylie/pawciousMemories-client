@@ -11,22 +11,20 @@
 .nav {
     top: 0;
     background-color: #88C7E6;
-    padding: 1em;
     position: fixed;
-    margin: 0;
     width: 100vw;
     z-index: 100;
 }
 
-/* .nav li {
-    display: block;
-    padding-right: 5em;
-} */
-
 #logoutImg {
     width: 5%;
+    float: right;
 }
 
 #logoutImg:hover {
     cursor: pointer;
+}
+
+.navbar-expand-md {
+    justify-content: center;
 }

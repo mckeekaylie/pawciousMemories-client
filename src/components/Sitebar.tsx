@@ -18,9 +18,9 @@ class Sitebar extends React.Component<TokenProps, {}>{
         return(
             <div>
                 <Navbar className='nav' light expand='md'>
-                    <NavbarBrand href='/' className='brand'>Pawcious Memories</NavbarBrand>
+                    <NavbarBrand href='/' title='Home' className='brand'>Pawcious Memories</NavbarBrand>
                     
-                        <NavItem className='logout' onClick={this.props.clearToken}><img id='logoutImg' src={logoutImg}/></NavItem>
+                        <NavItem className='logout' onClick={this.props.clearToken}><img id='logoutImg' title='Logout' src={logoutImg}/></NavItem>
                     
                 </Navbar>
             </div>
