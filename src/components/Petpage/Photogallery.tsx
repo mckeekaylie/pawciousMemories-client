@@ -1,145 +1,69 @@
 import React from 'react';
-import { Row, Col, Container} from 'reactstrap';
-import ReactImageGallery, { ReactImageGalleryItem, ReactImageGalleryProps } from 'react-image-gallery';
-import Petinfo from './Petinfo';
-
-
+import {  Col,  Card,  CardImg,CardGroup} from 'reactstrap';
+import APIURL from '../../helpers/environment'
+​
 // PROPS TYPE ALIAS
 type AcceptedProps = {
-<<<<<<< HEAD
-    PhotoGallery: (img: this.state.petId) => void
-=======
-    token: any
-    id: any
->>>>>>> e308abae3c2ea1bd7f40da0fef344d4519c944fd
+    token: any,
+    id: number
 };
-  
+​
 // STATE TYPE ALIAS
-type PhotoGallery = {  
-    image: id.file.path,
-    title: id.body.title,
-    caption: id.body.caption,
-
-
+type PhotoGalleryState = {  
+    imgArray: any
 };
-
-class Photogallery extends React.Component {
-     Photogallery: ReactImageGallery | null;
-
-    componentDidMount() {
-        if (this.Photogallery) {
-            const message = `Showing ${this.Photogallery.getCurrentIndex() + 1}. image the gallery.`;
+​
+class Photogallery extends React.Component<AcceptedProps, PhotoGalleryState> {
+     constructor(props: AcceptedProps){
+       super(props);
+       this.state = {
+         imgArray: []
         }
     }
-
-    renderThumbInner(item: ReactImageGalleryItem): React.ReactNode {
-        return (
-            <div className="image-gallery-thumbnail-inner">
-                <img
-                    src={pet.id.image}
-                    alt={pet.id.image}
-                    title={pet.id.title}
-                />
-                {item.thumbnailLabel && (
-                    <div className="image-gallery-thumbnail-label">
-                        {item.thumbnailLabel}
-                    </div>
-                )}
-            </div>
-        );
-    }
-
+​
+  componentDidMount = () => {
+      this.fetchPhotoGallery();
+  }
+​
+  // FETCHING USER'S ENTIRE PHOTO GALLERY FOR THIS PET
+  fetchPhotoGallery() {
+    const that = this;
+      fetch(`${APIURL}/gallery/image`, {
+        method: 'GET',
+         headers: new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': this.props.token
+        })
+    }).then((res) => res.json())
+      .then((PhotoGallery) => {
+        that.setState({
+            imgArray: PhotoGallery
+        })
+        console.log(PhotoGallery)
+        console.log(that.state.imgArray)
+    })
+  }
+    
+​
     render() {
-        const galleryItem: ReactImageGalleryItem = {
-            original: 'http://localhost/logo.jpg',
-            originalTitle: 'My Logo',
-            bulletClass: 'my-bullet-class-name',
-        };
-
-        const props: ReactImageGalleryProps = {
-            items: [galleryItem],
-            autoPlay: false,
-            showFullscreenButton: false,
-            renderThumbInner: this.renderThumbInner
-        
-        };
-    
-
-        return <ReactImageGallery ref={(r) => this.Photogallery = r} {...props} />
-    
-      /*  <div>
-
-        <Container>
-    <Row>
-      <Col xs={6} md={4}>
-        <Image src="holder.js/171x180" rounded />
-      </Col>
-      <Col xs={6} md={4}>
-        <Image src="holder.js/171x180" rounded />
-      </Col>
-      <Col xs={6} md={4}>
-        <Image src="holder.js/171x180" rounded />
-      </Col>
-    </Row>
-  </Container> 
-      </div>
-    }
+​
+    // IMAGE MAPPER  
+    const imageMapper = this.state.imgArray.map((petImage: any) =>
+      <Col md='4' className='petCol'>
+          <Card className='petCard'>  
+              <CardImg width="100%" height="100%" src={petImage.file} alt="Card image cap"  />
+          </Card>
+      </Col>          
+    )
+​
+    return (
+        <div>
+            <CardGroup>
+                {imageMapper}
+            </CardGroup>
+        </div>
+    )
+​
+    }    
 }
-
-// PROPS TYPE ALIAS
-type AcceptedProps = {
-    PhotoGallery: (img: image) => void
-};
-  
-// STATE TYPE ALIAS
-type PhotoGallery = {  
-    image: file.path,
-    title: req.body.title,
-    caption: req.body.caption,
-
-
-};
-
-class Photogallery extends React.Component<AcceptedProps, PhotoGallery> {
-    constructor(props: AcceptedProps){
-        super(props);
-        this.state = {
-                 
-       image: body.img,
-      title: body.title,
-      caption: body.caption,
-    }
-}
-      
-    render(){
-        return(
-            <div>
-                const Example = (props) => {
-  return (
-    <div>
-
-      <Container>
-  <Row>
-    <Col xs={6} md={4}>
-      <Image src="holder.js/171x180" rounded />
-    </Col>
-    <Col xs={6} md={4}>
-      <Image src="holder.js/171x180" rounded />
-    </Col>
-    <Col xs={6} md={4}>
-      <Image src="holder.js/171x180" rounded />
-    </Col>
-  </Row>
-</Container> 
-    </div>
-  );
-};
-                
-            </div>
-        )
-    }
-}
-
-*/
-    
 export default Photogallery;
