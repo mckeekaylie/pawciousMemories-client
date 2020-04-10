@@ -43,6 +43,12 @@ class Photogallery extends React.Component<AcceptedProps, PhotoGalleryState> {
         console.log(that.state.imgArray)
     })
   }
+
+  // isActivePet(){
+  //   if(this.state.imgArray.title === this.state.pet.name){
+  //     return true;
+  //   }
+  // }
     
 
     render() {
@@ -55,6 +61,8 @@ class Photogallery extends React.Component<AcceptedProps, PhotoGalleryState> {
           </Card>
       </Col>          
     )
+
+    // const imageFilter = this.state.imgArray.filter(this.isActivePet());
 
     return (
         <div>

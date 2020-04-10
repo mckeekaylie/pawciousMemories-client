@@ -31,6 +31,7 @@ type HomeState = {
     breed: string
     dob: string
     dateOfAdoption: string
+    adoptOrFoster: string
 }
 
 class Home extends React.Component<TokenProps, HomeState> {
@@ -48,7 +49,8 @@ class Home extends React.Component<TokenProps, HomeState> {
           species: '',
           breed: '',
           dob: '',
-          dateOfAdoption: ''
+          dateOfAdoption: '',
+          adoptOrFoster: ''
         }
       }
 
@@ -111,6 +113,7 @@ class Home extends React.Component<TokenProps, HomeState> {
         formData.append('breed', this.state.breed);
         formData.append('dob', this.state.dob);
         formData.append('dateOfAdoption', this.state.dateOfAdoption);
+        formData.append('adoptOrFoster', this.state.adoptOrFoster);
         formData.append('file', this.state.file);
                 
         fetch(`${APIURL}/petinfo/pet`, {
@@ -122,12 +125,36 @@ class Home extends React.Component<TokenProps, HomeState> {
         }) 
         
             .then((response) => response.json())
-            .then((newPetData) => console.log(newPetData));
+
+            .then((newPetData) => {
+                console.log(newPetData);
+
+                this.setState({
+                    modalOpen: false
+                })
+            })
     }
 
     // RENDER    
     render(){
         console.log(this.state.pet);
+
+        // ALPHABETIZING PETS
+        this.state.pet.sort((a: any, b: any) => {
+            if(a.name < b.name){
+                return -1
+            }
+
+            if(a.name > b.name) {
+                return 1
+            }
+
+            else {
+                return 0
+            }
+        })
+
+        // MAPPING PETS
         const petMapper = this.state.pet.map(pet =>
             <Col md='4' className='petCol'>
                 <Card className='petCard'>  
@@ -189,7 +216,10 @@ class Home extends React.Component<TokenProps, HomeState> {
                                 <Input type='text' placeholder='Date of Adoption' name='dateOfAdoption' onChange={(e) => this.setState({dateOfAdoption: e.target.value})} />
                             </FormGroup>
                             <FormGroup>
-                                <Input type='file' name='dateOfAdoption' onChange={e => uploadImg(e)} />
+                                <Input type='text' placeholder='Adopt or Foster' name='adoptOrFoster' onChange={(e) => this.setState({adoptOrFoster: e.target.value})} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Input type='file' name='avatar' onChange={e => uploadImg(e)} />
                             </FormGroup>
                             <Button type='submit'>Submit</Button>
                         </Form>
