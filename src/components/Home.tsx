@@ -132,9 +132,9 @@ class Home extends React.Component<TokenProps, HomeState> {
             <Col md='4' className='petCol'>
                 <Card className='petCard'>  
                     <CardImg width="100%" height="100%" src={pet.file} alt="Card image cap" onClick={(e) => this.petPageToggler(pet.id)} />
-                    <CardBody style={{backgroundColor: '#BBCBFE', height: '3em'}}>
-                        <CardTitle onClick={(e) => this.petPageToggler(pet.id)}>{pet.name}</CardTitle>
-                    </CardBody>
+                    <div id='petNameContainer'>
+                        <h1 className='petName' onClick={(e) => this.petPageToggler(pet.id)}>{pet.name}</h1>
+                    </div> 
                 </Card>
             </Col>          
         )
@@ -152,7 +152,7 @@ class Home extends React.Component<TokenProps, HomeState> {
                 <Sitebar clearToken={this.props.clearToken} />
 
                 <div>
-                <h1 style={{padding: '.5em'}}>My Pets</h1>
+                <h1 id='myPets'>My Pets</h1>
 
                 <Row>
                     <Col lg='5'></Col>
