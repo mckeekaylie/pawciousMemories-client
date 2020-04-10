@@ -9,7 +9,9 @@ import { useLocation, BrowserRouter, Router, Route, Switch } from 'react-router-
 // STATE TYPE ALIAS
 type TokenState = {
   sessionToken: string,
-  location: boolean
+  location: boolean,
+  clearToken: string,
+  modalOff: boolean,
 };
 
 class App extends React.Component<{}, TokenState> {
@@ -17,7 +19,9 @@ class App extends React.Component<{}, TokenState> {
     super(props);
     this.state = {
       sessionToken: '',
-      location: false
+      location: false,
+      clearToken: '',
+      modalOff: true
     }
   }
 
@@ -59,7 +63,7 @@ class App extends React.Component<{}, TokenState> {
         <div>
           <Switch>
             <Route exact path="/" render={(TokenProps) => <Home {...TokenProps} token={this.state.sessionToken} clearToken={this.clearToken.bind(this)} />} />
-            <Route exact path="/petpage/:petId" render={(AcceptedProps) => <Petpage {...AcceptedProps} token={this.state.sessionToken} id={null} state={null} />} />
+            <Route exact path="/petpage/:petId" render={(AcceptedProps) => <Petpage {...AcceptedProps} token={this.state.sessionToken} id={null} state={null} clearToken={this.state.clearToken} modalOff={true}/>} />
           </Switch>
         </div>
       );

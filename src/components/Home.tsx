@@ -2,15 +2,12 @@ import React from 'react';
 import {Row, Card, CardImg, CardText, CardBody,
     CardTitle, CardDeck, CardSubtitle, Button} from 'reactstrap';
 import Sitebar from './Sitebar'
-import Petpage from '../components/Petpage/Petpage';
-import Petinfo from '../components/Petpage/Petinfo';
+// import Petpage from '../components/Petpage/Petpage';
+// import Petinfo from '../components/Petpage/Petinfo';
 import APIURL from '../helpers/environment';
-<<<<<<< HEAD
 import Memory from '../components/Petpage/Memory'
-=======
 import { BrowserRouter, withRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
 import { timingSafeEqual } from 'crypto';
->>>>>>> e308abae3c2ea1bd7f40da0fef344d4519c944fd
 
 // PROPS TYPE ALIAS
 type TokenProps = {
@@ -85,7 +82,7 @@ class Home extends React.Component<TokenProps, HomeState> {
                 <CardImg top width="100%" src={pet.file} alt="Card image cap" />
                 <CardBody>
                     <CardTitle>{pet.name}</CardTitle>
-                    <Button onClick={(e) => this.petPageToggler(pet.id)}>Button</Button>
+                    <Button onClick={(e) => this.petPageToggler(pet.id)}>Choose Pet</Button>
                 </CardBody>
             </Card>
             </>
@@ -96,11 +93,9 @@ class Home extends React.Component<TokenProps, HomeState> {
                 <Sitebar clearToken={this.props.clearToken} />
                 <h1>Home page</h1>
                 {/* <Petinfo token={this.props.token}/> */}
-<<<<<<< HEAD
-                {petMapper}
-                <Memory token={this.props.token}/>
+                {/* {petMapper} */}
+                {/* <Memory token={this.props.token}/> */}
                 
-=======
                 <CardDeck>
                     {petMapper}
                 </CardDeck>
@@ -111,7 +106,6 @@ class Home extends React.Component<TokenProps, HomeState> {
                     </>
                     : <Redirect to='/' />
                 } 
->>>>>>> e308abae3c2ea1bd7f40da0fef344d4519c944fd
             </div>
         )
     }
