@@ -1,0 +1,17 @@
+.memoriesBody {
+    background-color: whitesmoke;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+#myMemsWith {
+    text-align: center;
+}
+
+#delete {
+    background-color: #37539B;
+}
+
+#edit {
+    background-color: #88C7E6;
+}

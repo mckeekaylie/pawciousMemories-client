@@ -176,25 +176,27 @@ class Home extends React.Component<TokenProps, HomeState> {
 
         return(
             <div className='home'>
+                {/* NAVBAR */}
                 <Sitebar clearToken={this.props.clearToken} />
 
+                {/* PAGE TITLE AND ADD A PET BUTTON */}
                 <div>
-                <h1 id='myPets'>My Pets</h1>
+                    <h1 id='myPets'>My Pets</h1>
 
-                <Row>
-                    <Col lg='5'></Col>
-                    <Col lg='2'><Button class='addPet' onClick={(e) => this.setState({modalOpen: true})}>Add a pet!</Button></Col>
-                    <Col lg='5'></Col>
-                </Row>
+                    <Row>
+                        <Col lg='5'></Col>
+                        <Col lg='2'><Button class='addPet' onClick={(e) => this.setState({modalOpen: true})}>Add a pet!</Button></Col>
+                        <Col lg='5'></Col>
+                    </Row>
                 </div>
 
-
+                {/* DISPLAY ALL OF THE USER'S PETS */}
                 <CardGroup>
                     {petMapper}
                 </CardGroup>
 
 
-                {/* MODAL */}
+                {/* ADD A PET MODAL */}
                 {this.state.modalOpen ? 
                 <Modal isOpen={true} toggle={toggle}>
                     <ModalHeader toggle={toggle}>Add a pet!</ModalHeader>
