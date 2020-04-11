@@ -1,6 +1,7 @@
 import React from 'react';
 import {  Col,  Card,  CardImg,CardGroup} from 'reactstrap';
-import APIURL from '../../helpers/environment'
+import APIURL from '../../helpers/environment';
+import './Photogallery.css'
 
 // PROPS TYPE ALIAS
 type AcceptedProps = {
@@ -43,9 +44,17 @@ class Photogallery extends React.Component<AcceptedProps, PhotoGalleryState> {
         console.log(that.state.imgArray)
     })
   }
+
+  // isActivePet(){
+  //   if(this.state.imgArray.title == this.state.pet.name){
+  //     return true;
+  //   }
+  // }
     
 
     render() {
+
+    // this.state.imgArray.filter(this.isActivePet());
 
     // IMAGE MAPPER  
     const imageMapper = this.state.imgArray.map((petImage: any) =>
@@ -57,7 +66,8 @@ class Photogallery extends React.Component<AcceptedProps, PhotoGalleryState> {
     )
 
     return (
-        <div>
+        <div className='galleryBody'>
+          <h1>Photos of</h1>
             <CardGroup>
                 {imageMapper}
             </CardGroup>

@@ -21,6 +21,15 @@ type PetinfoState = {
     breed: string
     dob: string
     dateOfAdoption: string
+
+    petToEdit: any
+    editPetName: string
+    editPetSpecies: string
+    editPetBreed: string
+    editPetDob: string
+    editPetDateOfAdopt: string
+    editAdoptOrFoster: string
+    editFile: string
 };
 
 class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
@@ -35,7 +44,16 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
           species: '',
           breed: '',
           dob: '',
-          dateOfAdoption: ''
+          dateOfAdoption: '',
+
+          petToEdit: [],
+          editPetName: '',
+          editPetSpecies: '',
+          editPetBreed: '',
+          editPetDob: '',
+          editPetDateOfAdopt: '',
+          editAdoptOrFoster: '',
+          editFile: ''
         }
     }
 
@@ -66,11 +84,12 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
             e.preventDefault();
     
             let formData = new FormData();
-            formData.append('name', this.state.name);
-            formData.append('species', this.state.species);
-            formData.append('breed', this.state.breed);
-            formData.append('dob', this.state.dob);
-            formData.append('dateOfAdoption', this.state.dateOfAdoption);
+            formData.append('name', this.state.editPetName);
+            formData.append('species', this.state.editPetSpecies);
+            formData.append('breed', this.state.editPetBreed);
+            formData.append('dob', this.state.editPetDob);
+            formData.append('dateOfAdoption', this.state.editPetDateOfAdopt);
+            formData.append('adoptOrFoster', this.state.editAdoptOrFoster);
             formData.append('file', this.state.file);
                     
             fetch(`${APIURL}/petinfo/pet/${this.props.id}`, {
@@ -80,9 +99,14 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
                     'Authorization': this.props.token
                 })
             }) 
-            
                 .then((response) => response.json())
-                .then((newPetData) => console.log(newPetData));
+                .then((newPetData) => {
+                    console.log(newPetData);
+
+                    this.setState({
+                        modalOpen: false
+                    })
+                })
         }
 
     render(){
@@ -95,11 +119,18 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
         const toggle = () => this.setState({modalOpen: false});
 
         // SET PET TO EDIT
-        const editPetinfo = (pet: any) => {
+        const editPetinfo = (editPet: any) => {
             this.setState({
-                pet: pet
+                petToEdit: editPet,
+                editPetName: editPet.name,
+                editPetSpecies: editPet.species,
+                editPetBreed: editPet.breed,
+                editPetDob: editPet.dob,
+                editPetDateOfAdopt: editPet.dateOfAdoption,
+                editAdoptOrFoster: editPet.adoptOrFoster,
+                file: editPet.file
             })
-            console.log(pet)
+            console.log(editPet)
         }
 
         return(
@@ -117,7 +148,14 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
                             <li>Date of Birth: {this.state.pet.dob}</li>
                             <li>Date of Adoption: {this.state.pet.dateOfAdoption}</li>
                             <li>Adopt or Foster: {this.state.pet.adoptOrFoster}</li>
-                            <li style={{listStyleType: 'none', float: 'right'}}><Button onClick={(e) => this.setState({modalOpen: true})}>Edit</Button></li>
+                            <li style={{listStyleType: 'none', float: 'right'}}>
+                                <Button onClick={(e) => {
+                                    this.setState({modalOpen: true}) 
+                                    editPetinfo(this.state.pet);
+                                } 
+                                }>Edit
+                                </Button>
+                            </li>
                         </ul>
                     </Col>
                 </Row>
@@ -130,22 +168,25 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
                     <ModalBody>
                         <Form encType="multipart/form-data" onSubmit={(e) => this.handlePetSubmit(e)}>
                             <FormGroup>
-                                <Input type='text' placeholder={this.state.pet.name} name='name' onChange={(e) => this.setState({name: e.target.value})} />
+                                <Input type='text' value={this.state.editPetName} name='name' onChange={(e) => this.setState({editPetName: e.target.value})} />
                             </FormGroup>
                             <FormGroup>
-                                <Input type='text' placeholder={this.state.pet.species} name='species' onChange={(e) => this.setState({species: e.target.value})} />
+                                <Input type='text' value={this.state.editPetSpecies} name='species' onChange={(e) => this.setState({editPetSpecies: e.target.value})} />
                             </FormGroup>
                             <FormGroup>
-                                <Input type='text' placeholder={this.state.pet.breed} name='breed' onChange={(e) => this.setState({breed: e.target.value})} />
+                                <Input type='text' value={this.state.editPetBreed} name='breed' onChange={(e) => this.setState({editPetBreed: e.target.value})} />
                             </FormGroup>
                             <FormGroup>
-                                <Input type='text' placeholder={this.state.pet.dob} name='dob' onChange={(e) => this.setState({dob: e.target.value})} />
+                                <Input type='text' value={this.state.editPetDob} name='dob' onChange={(e) => this.setState({editPetDob: e.target.value})} />
                             </FormGroup>
                             <FormGroup>
-                                <Input type='text' placeholder={this.state.pet.dateOfAdoption} name='dateOfAdoption' onChange={(e) => this.setState({dateOfAdoption: e.target.value})} />
+                                <Input type='text' value={this.state.editPetDateOfAdopt} name='dateOfAdoption' onChange={(e) => this.setState({editPetDateOfAdopt: e.target.value})} />
                             </FormGroup>
                             <FormGroup>
-                                <Input type='file' placeholder={this.state.pet.file} name='dateOfAdoption' onChange={e => uploadImg(e)} />
+                                <Input type='text' value={this.state.editAdoptOrFoster} name='adoptOrFoster' onChange={(e) => this.setState({editAdoptOrFoster: e.target.value})} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Input type='file' name='profileImg' onChange={e => uploadImg(e)} />
                             </FormGroup>
                             <Button type='submit'>Submit</Button>
                         </Form>

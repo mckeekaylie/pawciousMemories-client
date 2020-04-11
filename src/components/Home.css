@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
 
 /* ALL ELEMENTS */
 .home {
@@ -6,10 +6,12 @@
 }
 
 /* PAGE TOP */
-.home h1 {
+#myPets {
     text-align: center;
     font-family: Rochester, cursive;
+    font-weight: 500;
     font-size: 5em;
+    padding: .5em;
 }
 
 .btn {
@@ -18,6 +20,7 @@
     margin-bottom: 2em;
     background-color: #7165B1;
     border: none;
+    font-weight: 500;
 }
 
 .btn:hover {
@@ -45,8 +48,22 @@
     cursor: pointer;
 }
 
-.card-title {
-    font-family: Montserrat, sans-serif;
+.card-img {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.petName {
+    font-family: Raleway, sans-serif;
     font-weight: 700;
+    font-size: 1.5em;
     top: 0;
+}
+
+#petNameContainer {
+    background-color: #BBCBFE;
+    padding: .5em;
+    height: 3em;
 }
