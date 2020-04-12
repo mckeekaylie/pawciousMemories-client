@@ -1,6 +1,7 @@
 import React from 'react';
 import Signup from '../Auth/Signup';
 import Signin from './Signin';
+import Bored from './Bored';
 
 // PROPS TYPE ALIAS
 type TokenProps = {
@@ -39,6 +40,7 @@ class Auth extends React.Component<TokenProps, ToggleState> {
         return (
         <div>
             <h1 id='appTitle'>Pawcious Memories</h1>
+            <Bored />
             <div>
                 {this.state.showLogin ?
                     <Signin updateToken={this.props.updateToken} /> :

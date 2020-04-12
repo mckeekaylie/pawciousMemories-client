@@ -31,6 +31,7 @@ type HomeState = {
     breed: string
     dob: string
     dateOfAdoption: string
+    rainbowBridge: string
     adoptOrFoster: string
 }
 
@@ -50,6 +51,7 @@ class Home extends React.Component<TokenProps, HomeState> {
           breed: '',
           dob: '',
           dateOfAdoption: '',
+          rainbowBridge: '',
           adoptOrFoster: ''
         }
       }
@@ -113,6 +115,7 @@ class Home extends React.Component<TokenProps, HomeState> {
         formData.append('breed', this.state.breed);
         formData.append('dob', this.state.dob);
         formData.append('dateOfAdoption', this.state.dateOfAdoption);
+        formData.append('rainbowBridge', this.state.rainbowBridge);
         formData.append('adoptOrFoster', this.state.adoptOrFoster);
         formData.append('file', this.state.file);
                 
@@ -218,12 +221,15 @@ class Home extends React.Component<TokenProps, HomeState> {
                                 <Input type='text' placeholder='Date of Adoption' name='dateOfAdoption' onChange={(e) => this.setState({dateOfAdoption: e.target.value})} />
                             </FormGroup>
                             <FormGroup>
+                                <Input type='text' placeholder='Date Pet Crossed the Rainbow Bridge' name='rainbowBridge' onChange={(e) => this.setState({rainbowBridge: e.target.value})} />
+                            </FormGroup>
+                            <FormGroup>
                                 <Input type='text' placeholder='Adopt or Foster' name='adoptOrFoster' onChange={(e) => this.setState({adoptOrFoster: e.target.value})} />
                             </FormGroup>
                             <FormGroup>
                                 <Input type='file' name='avatar' onChange={e => uploadImg(e)} />
                             </FormGroup>
-                            <Button type='submit'>Submit</Button>
+                            <Button type='submit' style={{marginBottom: 0}}>Submit</Button>
                         </Form>
                     </ModalBody>
                 </Modal>

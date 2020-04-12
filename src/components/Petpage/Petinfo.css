@@ -12,3 +12,9 @@
 #infoCol {
     padding-top: 1.4em;
 }
+
+#deletePet {
+    background-color: red;
+    float: right;
+    margin-bottom: 0;
+}
