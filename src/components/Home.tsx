@@ -7,7 +7,11 @@ import Petpage from '../components/Petpage/Petpage';
 import Petinfo from '../components/Petpage/Petinfo';
 import APIURL from '../helpers/environment';
 import { BrowserRouter, withRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
-import { timingSafeEqual } from 'crypto';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 import './Home.css'
 
 // PROPS TYPE ALIAS
@@ -17,14 +21,13 @@ type TokenProps = {
     modalOff: any
 };
 
-//STATE TYPE ALIAS
+// STATE TYPE ALIAS
 type HomeState = {
     token: ''
     pet: Array<any>
     showPetPage: boolean
     petId: string
 
-    modalOpen: boolean
     file: any
     name: string
     species: string
@@ -33,6 +36,15 @@ type HomeState = {
     dateOfAdoption: string
     rainbowBridge: string
     adoptOrFoster: string
+
+    // EVENT STATE VARIABLES
+    modalOpen: boolean
+    radioIsSelected: string
+
+    // TOGGLING DIFFERENT PETS
+    showAllPets: boolean
+    showFosters: boolean
+    showAdoptions: boolean
 }
 
 class Home extends React.Component<TokenProps, HomeState> {
@@ -52,7 +64,11 @@ class Home extends React.Component<TokenProps, HomeState> {
           dob: '',
           dateOfAdoption: '',
           rainbowBridge: '',
-          adoptOrFoster: ''
+          adoptOrFoster: '',
+            radioIsSelected: 'a',
+          showAllPets: true,
+          showFosters: false,
+          showAdoptions: false
         }
       }
 
@@ -169,6 +185,47 @@ class Home extends React.Component<TokenProps, HomeState> {
             </Col>          
         )
 
+        // TOGGLE FOSTERS
+        let toggleFosters = this.state.pet.filter((petToFilter: any) => {
+            if(petToFilter.adoptOrFoster === 'Foster'){
+                return petToFilter
+            }
+        })
+
+        console.log(toggleFosters);
+
+        const fosterMapper = toggleFosters.map(pet =>
+            <Col md='4' className='petCol'>
+                <Card className='petCard'>  
+                    <CardImg width="100%" height="100%" src={pet.file} alt="Card image cap" onClick={(e) => this.petPageToggler(pet.id)} />
+                    <div id='petNameContainer'>
+                        <h1 className='petName' onClick={(e) => this.petPageToggler(pet.id)}>{pet.name}</h1>
+                    </div> 
+                </Card>
+            </Col>          
+        )
+
+        // TOGGLE ADOPTIONS
+        let toggleAdoptions = this.state.pet.filter((petToFilter: any) => {
+            if(petToFilter.adoptOrFoster === 'Adopt'){
+                return petToFilter
+            }
+        })
+
+        console.log(toggleAdoptions);
+
+        const adoptionMapper = toggleAdoptions.map(pet =>
+            <Col md='4' className='petCol'>
+                <Card className='petCard'>  
+                    <CardImg width="100%" height="100%" src={pet.file} alt="Card image cap" onClick={(e) => this.petPageToggler(pet.id)} />
+                    <div id='petNameContainer'>
+                        <h1 className='petName' onClick={(e) => this.petPageToggler(pet.id)}>{pet.name}</h1>
+                    </div> 
+                </Card>
+            </Col>          
+        )
+        
+
         // UPLOAD IMAGE
         const uploadImg = (e: any) => {
             this.setState({ file: e.target.files[0] });
@@ -191,13 +248,53 @@ class Home extends React.Component<TokenProps, HomeState> {
                         <Col lg='2'><Button class='addPet' onClick={(e) => this.setState({modalOpen: true})}>Add a pet!</Button></Col>
                         <Col lg='5'></Col>
                     </Row>
+
+                    <Row className='toggleButtonsRow'>
+                        <Col style={{paddingLeft: '0', paddingRight: '0'}}>
+                            {/* ALL PETS BUTTON */}
+                            <Button style={{width: '100%', backgroundColor: '#7165B1', borderTopLeftRadius: '0', borderTopRightRadius: '0', borderBottomLeftRadius: '0', borderBottomRightRadius: '0'}} onClick={(e) => {
+                                this.setState({showAllPets: true, showAdoptions: false, showFosters: false})
+                            }
+                            }>All Pets</Button>
+                        </Col>
+                        <Col style={{paddingLeft: '0', paddingRight: '0'}}>
+                            {/* ALL ADOPTIONS BUTTON */}
+                            <Button style={{width: '100%', backgroundColor: '#88C7E6', borderTopLeftRadius: '0', borderTopRightRadius: '0', borderBottomLeftRadius: '0', borderBottomRightRadius: '0'}} onClick={(e) => {
+                                this.setState({showAllPets: false, showAdoptions: true, showFosters: false})
+                            }
+                            }>Adoptions</Button>
+                        </Col>
+                        <Col style={{paddingLeft: '0', paddingRight: '0'}}>
+                            {/* ALL FOSTERS BUTTON */}
+                            <Button style={{width: '100%', backgroundColor: '#37539B', borderTopLeftRadius: '0', borderTopRightRadius: '0', borderBottomLeftRadius: '0', borderBottomRightRadius: '0'}} onClick={(e) => {
+                                this.setState({showAllPets: false, showAdoptions: false, showFosters: true})
+                            }
+                            }>Fosters</Button>
+                        </Col>
+                    </Row>
                 </div>
 
                 {/* DISPLAY ALL OF THE USER'S PETS */}
-                <CardGroup>
-                    {petMapper}
-                </CardGroup>
+                {this.state.showAllPets ?
+                    <CardGroup>
+                        {petMapper}
+                    </CardGroup>
+                : null
+                }
 
+                {this.state.showAdoptions ? 
+                    <CardGroup>
+                        {adoptionMapper}
+                    </CardGroup>
+                : null
+                }   
+
+                {this.state.showFosters ? 
+                    <CardGroup>
+                        {fosterMapper}
+                    </CardGroup>
+                : null
+                }
 
                 {/* ADD A PET MODAL */}
                 {this.state.modalOpen ? 
@@ -224,7 +321,10 @@ class Home extends React.Component<TokenProps, HomeState> {
                                 <Input type='text' placeholder='Date Pet Crossed the Rainbow Bridge' name='rainbowBridge' onChange={(e) => this.setState({rainbowBridge: e.target.value})} />
                             </FormGroup>
                             <FormGroup>
-                                <Input type='text' placeholder='Adopt or Foster' name='adoptOrFoster' onChange={(e) => this.setState({adoptOrFoster: e.target.value})} />
+                                <Input type='select' placeholder='Adopt or Foster' name='adoptOrFoster' onChange={(e) => this.setState({adoptOrFoster: e.target.value})}>
+                                    <option>Adopt</option>
+                                    <option>Foster</option>
+                                </Input>
                             </FormGroup>
                             <FormGroup>
                                 <Input type='file' name='avatar' onChange={e => uploadImg(e)} />

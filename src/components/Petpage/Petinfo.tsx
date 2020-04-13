@@ -221,7 +221,10 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
                                 <Input type='text' value={this.state.editRainbowBridge} name='dateOfAdoption' onChange={(e) => this.setState({editRainbowBridge: e.target.value})} />
                             </FormGroup>
                             <FormGroup>
-                                <Input type='text' value={this.state.editAdoptOrFoster} name='adoptOrFoster' onChange={(e) => this.setState({editAdoptOrFoster: e.target.value})} />
+                                <Input type='select' value={this.state.editAdoptOrFoster} name='adoptOrFoster' onChange={(e) => this.setState({editAdoptOrFoster: e.target.value})}>
+                                    <option>Adopt</option>
+                                    <option>Foster</option>
+                                </Input>
                             </FormGroup>
                             <FormGroup>
                                 <Input type='file' name='profileImg' onChange={e => uploadImg(e)} />
