@@ -69,6 +69,7 @@ class App extends React.Component<{}, TokenState> {
       );
     } else {
       return(<Auth updateToken={this.updateToken.bind(this)} />)
+      
     }
   }
 }
