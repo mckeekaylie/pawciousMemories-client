@@ -1,8 +1,8 @@
 import React from 'react';
 import APIURL from '../../helpers/environment'
 import './Petinfo.css'
-import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Input } from 'reactstrap';
-import { throws } from 'assert';
+import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, ModalFooter } from 'reactstrap';
+import {Redirect} from 'react-router-dom'
 
 // PROPS TYPE ALIAS
 type AcceptedProps = {
@@ -12,24 +12,30 @@ type AcceptedProps = {
   
 // STATE TYPE ALIAS
 type PetinfoState = {
+    // STORES ACTIVE PET'S INFO
     pet: any
-    modalOpen: boolean
-
     file: any
     name: string
     species: string
     breed: string
     dob: string
+    rainbowBridge: string
     dateOfAdoption: string
 
+    // EDIT MODAL STATE VARIABLES
     petToEdit: any
     editPetName: string
     editPetSpecies: string
     editPetBreed: string
     editPetDob: string
     editPetDateOfAdopt: string
+    editRainbowBridge: string
     editAdoptOrFoster: string
     editFile: string
+
+    // EVENT STATE VARIABLES
+    modalOpen: boolean
+    fireRedirect: boolean
 };
 
 class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
@@ -37,13 +43,12 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
         super(props);
         this.state = {
           pet: [],
-
-          modalOpen: false,
           file: '',
           name: '',
           species: '',
           breed: '',
           dob: '',
+          rainbowBridge: '',
           dateOfAdoption: '',
 
           petToEdit: [],
@@ -52,12 +57,17 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
           editPetBreed: '',
           editPetDob: '',
           editPetDateOfAdopt: '',
+          editRainbowBridge: '',
           editAdoptOrFoster: '',
-          editFile: ''
+          editFile: '',
+
+          fireRedirect: false,
+          modalOpen: false
         }
     }
 
     componentDidMount = () => {
+        // FETCH THE PET INFO FOR THE ACTIVE PET
         const fetchPetinfo = () => {
             const that = this;
             fetch(`${APIURL}/petinfo/pet/${this.props.id}`, { 
@@ -79,35 +89,58 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
         fetchPetinfo();
     }
 
-        // SUBMIT A NEW PET
-        handlePetSubmit(e: any) {
-            e.preventDefault();
+    // EDIT PET
+    handlePetEdit(e: any) {
+        e.preventDefault();
     
-            let formData = new FormData();
-            formData.append('name', this.state.editPetName);
-            formData.append('species', this.state.editPetSpecies);
-            formData.append('breed', this.state.editPetBreed);
-            formData.append('dob', this.state.editPetDob);
-            formData.append('dateOfAdoption', this.state.editPetDateOfAdopt);
-            formData.append('adoptOrFoster', this.state.editAdoptOrFoster);
-            formData.append('file', this.state.file);
+        let formData = new FormData();
+        formData.append('name', this.state.editPetName);
+        formData.append('species', this.state.editPetSpecies);
+        formData.append('breed', this.state.editPetBreed);
+        formData.append('dob', this.state.editPetDob);
+        formData.append('dateOfAdoption', this.state.editPetDateOfAdopt);
+        formData.append('rainbowBridge', this.state.editRainbowBridge);
+        formData.append('adoptOrFoster', this.state.editAdoptOrFoster);
+        formData.append('file', this.state.file);
                     
-            fetch(`${APIURL}/petinfo/pet/${this.props.id}`, {
-                method: 'PUT',
-                body: formData,
-                headers: new Headers ({
+        fetch(`${APIURL}/petinfo/pet/${this.props.id}`, {
+            method: 'PUT',
+            body: formData,
+            headers: new Headers ({
                     'Authorization': this.props.token
                 })
             }) 
-                .then((response) => response.json())
-                .then((newPetData) => {
-                    console.log(newPetData);
+            .then((response) => response.json())
+            .then((newPetData) => {
+                console.log(newPetData);
 
-                    this.setState({
-                        modalOpen: false
-                    })
+                this.setState({
+                    modalOpen: false
                 })
-        }
+            })
+    }
+
+    // DELETE A PET
+    handlePetDelete(e: any) {
+        e.preventDefault();
+                
+        fetch(`${APIURL}/petinfo/pet/${this.props.id}`, {
+            method: 'DELETE',
+            headers: new Headers ({
+                'Content-Type': 'application/json',
+                'Authorization': this.props.token
+            })
+        }) 
+            .then((response) => response.json())
+            .then((deletePet) => {
+                console.log(deletePet);
+
+                this.setState({
+                    modalOpen: false
+                })
+            })
+    }
+
 
     render(){
         // UPLOAD IMAGE
@@ -126,6 +159,7 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
                 editPetSpecies: editPet.species,
                 editPetBreed: editPet.breed,
                 editPetDob: editPet.dob,
+                editRainbowBridge: editPet.rainbowBridge,
                 editPetDateOfAdopt: editPet.dateOfAdoption,
                 editAdoptOrFoster: editPet.adoptOrFoster,
                 file: editPet.file
@@ -147,6 +181,7 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
                             <li>Breed: {this.state.pet.breed}</li>
                             <li>Date of Birth: {this.state.pet.dob}</li>
                             <li>Date of Adoption: {this.state.pet.dateOfAdoption}</li>
+                            <li>Crossed the Rainbow Bridge: {this.state.pet.rainbowBridge}</li>
                             <li>Adopt or Foster: {this.state.pet.adoptOrFoster}</li>
                             <li style={{listStyleType: 'none', float: 'right'}}>
                                 <Button onClick={(e) => {
@@ -166,7 +201,7 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
                 <Modal isOpen={true} toggle={toggle}>
                     <ModalHeader toggle={toggle}>Edit {this.state.pet.name}'s Info</ModalHeader>
                     <ModalBody>
-                        <Form encType="multipart/form-data" onSubmit={(e) => this.handlePetSubmit(e)}>
+                        <Form encType="multipart/form-data" onSubmit={(e) => this.handlePetEdit(e)}>
                             <FormGroup>
                                 <Input type='text' value={this.state.editPetName} name='name' onChange={(e) => this.setState({editPetName: e.target.value})} />
                             </FormGroup>
@@ -183,14 +218,33 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
                                 <Input type='text' value={this.state.editPetDateOfAdopt} name='dateOfAdoption' onChange={(e) => this.setState({editPetDateOfAdopt: e.target.value})} />
                             </FormGroup>
                             <FormGroup>
-                                <Input type='text' value={this.state.editAdoptOrFoster} name='adoptOrFoster' onChange={(e) => this.setState({editAdoptOrFoster: e.target.value})} />
+                                <Input type='text' value={this.state.editRainbowBridge} name='dateOfAdoption' onChange={(e) => this.setState({editRainbowBridge: e.target.value})} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Input type='select' value={this.state.editAdoptOrFoster} name='adoptOrFoster' onChange={(e) => this.setState({editAdoptOrFoster: e.target.value})}>
+                                    <option>Adopt</option>
+                                    <option>Foster</option>
+                                </Input>
                             </FormGroup>
                             <FormGroup>
                                 <Input type='file' name='profileImg' onChange={e => uploadImg(e)} />
                             </FormGroup>
-                            <Button type='submit'>Submit</Button>
+                            <Button type='submit' style={{marginBottom: 0}}>Submit</Button>
                         </Form>
                     </ModalBody>
+                    <ModalFooter>
+                        <Col>
+                            <h3>REMOVE PET</h3>
+                        </Col>
+                        <Col>
+                            <Button id='deletePet' onClick={(e) => {
+                                this.handlePetDelete(e)
+                                this.setState({fireRedirect: true})
+                                }}>Delete
+                            </Button>
+                            {this.state.fireRedirect ? <Redirect to={'/'}/> : null}
+                        </Col>
+                    </ModalFooter>
                 </Modal>
                 : null
                 } 

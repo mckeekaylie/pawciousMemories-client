@@ -11,7 +11,9 @@ type AcceptedProps = {
 // STATE TYPE ALIAS
 type SigninState = {
     email: string,
-    password: string
+    password: string,
+    incPassword: boolean,
+    emailNotExist: boolean
 };
 
 class Signin extends React.Component<AcceptedProps, SigninState>{
@@ -19,7 +21,9 @@ class Signin extends React.Component<AcceptedProps, SigninState>{
         super(props);
         this.state = {
           email: '',
-          password: ''
+          password: '',
+          incPassword: false,
+          emailNotExist: false
         }
       }
 
@@ -36,6 +40,14 @@ class Signin extends React.Component<AcceptedProps, SigninState>{
             (response) => response.json()
         ) .then((data) => {
             console.log(data);
+            // if(data.error === 'bad gateway'){
+            //     this.setState({incPassword: true})
+            // }
+
+            // if(data.error === 'failed to authenticate'){
+            //     this.setState({emailNotExist: true})
+            // }
+
             this.props.updateToken(data.sessionToken)
         })
     }
@@ -75,6 +87,8 @@ class Signin extends React.Component<AcceptedProps, SigninState>{
                 </FormGroup>
                 <Button className='signinUp'type='submit'>Signin</Button>
             </Form>
+            {/* {this.state.incPassword === true ? <Snackbar incPassword={this.state.incPassword} /> : null}
+            {this.state.emailNotExist === true ? <Snackbar emailNotExist={this.state.emailNotExist} /> : null} */}
         </div>
         )
     }
