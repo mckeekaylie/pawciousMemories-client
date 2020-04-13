@@ -3,8 +3,6 @@ import {Row, Col, Card, CardImg, CardText, CardBody,
     CardTitle, CardDeck, CardGroup, CardSubtitle, CardColumns, Button, BreadcrumbItem,
     Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input} from 'reactstrap';
 import Sitebar from './Sitebar'
-import Petpage from '../components/Petpage/Petpage';
-import Petinfo from '../components/Petpage/Petinfo';
 import APIURL from '../helpers/environment';
 import { BrowserRouter, withRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
 import Radio from '@material-ui/core/Radio';
@@ -240,31 +238,31 @@ class Home extends React.Component<TokenProps, HomeState> {
                 <Sitebar clearToken={this.props.clearToken} />
 
                 {/* PAGE TITLE AND ADD A PET BUTTON */}
-                <div>
+                <div style={{paddingBottom: '0'}}>
                     <h1 id='myPets'>My Pets</h1>
 
                     <Row>
                         <Col lg='5'></Col>
-                        <Col lg='2'><Button class='addPet' onClick={(e) => this.setState({modalOpen: true})}>Add a pet!</Button></Col>
+                        <Col lg='2'><Button style={{marginBottom: '3em'}} onClick={(e) => this.setState({modalOpen: true})}>Add a pet!</Button></Col>
                         <Col lg='5'></Col>
                     </Row>
 
                     <Row className='toggleButtonsRow'>
-                        <Col style={{paddingLeft: '0', paddingRight: '0'}}>
+                        <Col style={{padding: '0'}}>
                             {/* ALL PETS BUTTON */}
                             <Button style={{width: '100%', backgroundColor: '#7165B1', borderTopLeftRadius: '0', borderTopRightRadius: '0', borderBottomLeftRadius: '0', borderBottomRightRadius: '0'}} onClick={(e) => {
                                 this.setState({showAllPets: true, showAdoptions: false, showFosters: false})
                             }
                             }>All Pets</Button>
                         </Col>
-                        <Col style={{paddingLeft: '0', paddingRight: '0'}}>
+                        <Col style={{padding: '0'}}>
                             {/* ALL ADOPTIONS BUTTON */}
                             <Button style={{width: '100%', backgroundColor: '#88C7E6', borderTopLeftRadius: '0', borderTopRightRadius: '0', borderBottomLeftRadius: '0', borderBottomRightRadius: '0'}} onClick={(e) => {
                                 this.setState({showAllPets: false, showAdoptions: true, showFosters: false})
                             }
                             }>Adoptions</Button>
                         </Col>
-                        <Col style={{paddingLeft: '0', paddingRight: '0'}}>
+                        <Col style={{padding: '0'}}>
                             {/* ALL FOSTERS BUTTON */}
                             <Button style={{width: '100%', backgroundColor: '#37539B', borderTopLeftRadius: '0', borderTopRightRadius: '0', borderBottomLeftRadius: '0', borderBottomRightRadius: '0'}} onClick={(e) => {
                                 this.setState({showAllPets: false, showAdoptions: false, showFosters: true})
@@ -276,23 +274,35 @@ class Home extends React.Component<TokenProps, HomeState> {
 
                 {/* DISPLAY ALL OF THE USER'S PETS */}
                 {this.state.showAllPets ?
-                    <CardGroup>
-                        {petMapper}
-                    </CardGroup>
+                    <div>
+                        <div className='tabTitleContainer'><h1 className='tabTitle'>All Pets</h1></div>
+
+                        <CardGroup>
+                            {petMapper}
+                        </CardGroup>
+                    </div>
                 : null
                 }
 
-                {this.state.showAdoptions ? 
-                    <CardGroup>
-                        {adoptionMapper}
-                    </CardGroup>
+                {this.state.showAdoptions ?
+                    <div> 
+                        <div className='tabTitleContainer'><h1 className='tabTitle'>My Adoptions</h1></div>
+
+                        <CardGroup>
+                            {adoptionMapper}
+                        </CardGroup>
+                    </div>
                 : null
                 }   
 
                 {this.state.showFosters ? 
-                    <CardGroup>
-                        {fosterMapper}
-                    </CardGroup>
+                    <div>
+                        <div className='tabTitleContainer'><h1 className='tabTitle'>My Fosters</h1></div>
+
+                        <CardGroup>
+                            {fosterMapper}
+                        </CardGroup>
+                    </div>
                 : null
                 }
 

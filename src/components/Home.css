@@ -18,7 +18,6 @@
 .btn {
     display: block;
     margin: auto;
-    margin-bottom: 2em;
     background-color: #7165B1;
     border: none;
     font-weight: 500;
@@ -30,14 +29,25 @@
 }
 
 /* PET SECTION */
+.tabTitle {
+    padding-top: 1em;
+    text-align: center;
+    font-family: Raleway;
+    font-weight: 600;
+}
+
+.tabTitleContainer {
+    background-color: whitesmoke;
+    height: 10em;
+}
+
 .petCol {
     padding-left: 0;
     padding-right: 0;
-    padding-bottom: 3em;
 }
 
 .petCard {
-    height: 20em;
+    height: 25em;
     border: none;
 }
 

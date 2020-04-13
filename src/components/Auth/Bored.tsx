@@ -61,7 +61,7 @@ class Bored extends React.Component<BoredProps, BoredState> {
     render() {
         return(
             <div>
-                <Button type="primary" onClick={(e) => {
+                <Button className='sillyBtn' style={{backgroundColor: '#37539B'}} onClick={(e) => {
                     this.showModal()
                     this.fetchBoredActivity()
                 }} >Bored? Spawn a random activity.</Button>

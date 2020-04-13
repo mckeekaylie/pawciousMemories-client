@@ -1,0 +1,47 @@
+.authBody {
+    height: 100vh;
+    background-image: url('../../assets/bkgd.png');
+    background-size: cover;
+}
+
+#appTitle {
+    padding-top: 1em;
+    text-align: center;
+    font-family: Rochester, cursive;
+    font-weight: 500;
+    font-size: 5em;
+}
+
+.signInUp {
+    width: 30em;
+    display: block;
+    margin: auto;
+}
+
+#toggle {
+    margin-top: 2em;
+}
+
+#sillyComponents {
+    margin-top: 10em;
+}
+
+.sillyBtn {
+    display: block;
+    margin: auto;
+    background-color: #7165B1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: Raleway;
+    font-weight: 600;
+}
+
+.sillyBtn:hover {
+    background-color: #37539B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: Raleway;
+    font-weight: 600;
+}
