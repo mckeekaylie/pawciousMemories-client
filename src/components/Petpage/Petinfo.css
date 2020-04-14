@@ -1,0 +1,21 @@
+#avatar {
+    width: 15em;
+    height: 15em;
+    border-radius: 50%;
+}
+
+.petInfo {
+    margin: 2em;
+    margin-top: 7em;
+    font-family: Raleway, sans-serif;
+}
+
+#infoCol {
+    padding-top: 1.4em;
+}
+
+#deletePet {
+    background-color: red;
+    float: right;
+    margin-bottom: 0;
+}

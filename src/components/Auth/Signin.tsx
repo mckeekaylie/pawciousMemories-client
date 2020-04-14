@@ -5,13 +5,17 @@ import APIURL from '../../helpers/environment';
 
 // PROPS TYPE ALIAS
 type AcceptedProps = {
-    updateToken: (newToken: string) => void
+    updateToken: (newToken: string) => void,
+    setUserRole: (role: string) => void 
 };
   
 // STATE TYPE ALIAS
 type SigninState = {
     email: string,
-    password: string
+    password: string,
+    userRole: string,
+    incPassword: boolean,
+    emailNotExist: boolean
 };
 
 class Signin extends React.Component<AcceptedProps, SigninState>{
@@ -19,7 +23,10 @@ class Signin extends React.Component<AcceptedProps, SigninState>{
         super(props);
         this.state = {
           email: '',
-          password: ''
+          password: '',
+          userRole: '',
+          incPassword: false,
+          emailNotExist: false
         }
       }
 
@@ -36,6 +43,10 @@ class Signin extends React.Component<AcceptedProps, SigninState>{
             (response) => response.json()
         ) .then((data) => {
             console.log(data);
+            console.log(data.user.role)
+            
+            this.props.setUserRole(data.user.role)
+
             this.props.updateToken(data.sessionToken)
         })
     }
@@ -75,6 +86,8 @@ class Signin extends React.Component<AcceptedProps, SigninState>{
                 </FormGroup>
                 <Button className='signinUp'type='submit'>Signin</Button>
             </Form>
+            {/* {this.state.incPassword === true ? <Snackbar incPassword={this.state.incPassword} /> : null}
+            {this.state.emailNotExist === true ? <Snackbar emailNotExist={this.state.emailNotExist} /> : null} */}
         </div>
         )
     }
