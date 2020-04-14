@@ -19,7 +19,6 @@
     "antd": "^4.1.2",
     "aor-postgrest-client": "^0.2.5",
     "bootstrap": "^4.4.1",
-    "antd": "^4.1.2",
     "jsonwebtoken": "^8.5.1",
     "ra-data-json-server": "^3.4.1",
     "ra-data-simple-rest": "^3.3.2",

@@ -3,11 +3,6 @@ import {Row, Col, Card, CardImg, CardText, CardBody,
     CardTitle, CardDeck, CardGroup, CardSubtitle, CardColumns, Button, BreadcrumbItem,
     Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input} from 'reactstrap';
 import Sitebar from './Sitebar'
-<<<<<<< HEAD
-// import Petpage from '../components/Petpage/Petpage';
-// import Petinfo from '../components/Petpage/Petinfo';
-=======
->>>>>>> 443427439275bcb4fd8c3718da44ded23c2b9981
 import APIURL from '../helpers/environment';
 import Memory from '../components/Petpage/Memory'
 import { BrowserRouter, withRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
