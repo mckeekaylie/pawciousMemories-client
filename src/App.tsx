@@ -3,7 +3,7 @@ import './App.css';
 import Auth from './components/Auth/Auth';
 import Home from './components/Home';
 import Petpage from './components/Petpage/Petpage';
-import { useLocation, BrowserRouter, Router, Route, Switch } from 'react-router-dom';
+import { useLocation, BrowserRouter, Router, Route, Switch } from 'react-router-dom'
 
 
 // STATE TYPE ALIAS
@@ -53,8 +53,6 @@ class App extends React.Component<{}, TokenState> {
         sessionToken: ''
       })
     }
-
-
 
   render(){
     console.log(this.state.sessionToken)
