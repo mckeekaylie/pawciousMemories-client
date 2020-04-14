@@ -5,7 +5,8 @@ import APIURL from '../../helpers/environment';
 
 // PROPS TYPE ALIAS
 type AcceptedProps = {
-    updateToken: (newToken: string) => void
+    updateToken: (newToken: string) => void,
+    setUserRole: (role: string) => void 
 };
   
 // STATE TYPE ALIAS

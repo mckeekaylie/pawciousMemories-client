@@ -1,5 +1,6 @@
 .memoriesBody {
     background-color: whitesmoke;
+    font-family: Raleway, sans-serif;
     padding-top: 2em;
     padding-bottom: 2em;
 }
@@ -10,8 +11,10 @@
 
 #delete {
     background-color: #37539B;
+    margin-bottom: 2em;
 }
 
 #edit {
     background-color: #88C7E6;
+    margin-bottom: 2em;
 }

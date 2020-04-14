@@ -1,15 +1,8 @@
 import React from 'react';
-import {Row, Col, Card, CardImg, CardText, CardBody,
-    CardTitle, CardDeck, CardGroup, CardSubtitle, CardColumns, Button, BreadcrumbItem,
-    Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input} from 'reactstrap';
+import {Row, Col, Card, CardImg, CardGroup, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Input} from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 import Sitebar from './Sitebar'
 import APIURL from '../helpers/environment';
-import { BrowserRouter, withRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import './Home.css'
 
 // PROPS TYPE ALIAS
@@ -22,10 +15,14 @@ type TokenProps = {
 // STATE TYPE ALIAS
 type HomeState = {
     token: ''
+
+    // HOLDS ALL OF THE USER'S PETS WHEN FETCHED
     pet: Array<any>
-    showPetPage: boolean
+
+    // USED TO DETERMINE ACTIVE PET
     petId: string
 
+    // STATE VARIABLES FOR HOLDING PET INFO DATA
     file: any
     name: string
     species: string
@@ -37,7 +34,7 @@ type HomeState = {
 
     // EVENT STATE VARIABLES
     modalOpen: boolean
-    radioIsSelected: string
+    showPetPage: boolean
 
     // TOGGLING DIFFERENT PETS
     showAllPets: boolean
@@ -51,10 +48,7 @@ class Home extends React.Component<TokenProps, HomeState> {
         this.state = {
           token: '',
           pet: [],
-          showPetPage: false,
           petId: '',
-
-          modalOpen: false,
           file: '',
           name: '',
           species: '',
@@ -63,10 +57,13 @@ class Home extends React.Component<TokenProps, HomeState> {
           dateOfAdoption: '',
           rainbowBridge: '',
           adoptOrFoster: '',
-            radioIsSelected: 'a',
+
+          modalOpen: false,
+          showPetPage: false,
+
           showAllPets: true,
           showFosters: false,
-          showAdoptions: false
+          showAdoptions: false,
         }
       }
 
@@ -154,8 +151,6 @@ class Home extends React.Component<TokenProps, HomeState> {
 
     // RENDER    
     render(){
-        console.log(this.state.pet);
-
         // ALPHABETIZING PETS
         this.state.pet.sort((a: any, b: any) => {
             if(a.name < b.name){
@@ -190,8 +185,6 @@ class Home extends React.Component<TokenProps, HomeState> {
             }
         })
 
-        console.log(toggleFosters);
-
         const fosterMapper = toggleFosters.map(pet =>
             <Col md='4' className='petCol'>
                 <Card className='petCard'>  
@@ -210,8 +203,6 @@ class Home extends React.Component<TokenProps, HomeState> {
             }
         })
 
-        console.log(toggleAdoptions);
-
         const adoptionMapper = toggleAdoptions.map(pet =>
             <Col md='4' className='petCol'>
                 <Card className='petCard'>  
@@ -223,7 +214,6 @@ class Home extends React.Component<TokenProps, HomeState> {
             </Col>          
         )
         
-
         // UPLOAD IMAGE
         const uploadImg = (e: any) => {
             this.setState({ file: e.target.files[0] });
@@ -331,7 +321,8 @@ class Home extends React.Component<TokenProps, HomeState> {
                                 <Input type='text' placeholder='Date Pet Crossed the Rainbow Bridge' name='rainbowBridge' onChange={(e) => this.setState({rainbowBridge: e.target.value})} />
                             </FormGroup>
                             <FormGroup>
-                                <Input type='select' placeholder='Adopt or Foster' name='adoptOrFoster' onChange={(e) => this.setState({adoptOrFoster: e.target.value})}>
+                                <Input type='select' name='adoptOrFoster' onChange={(e) => this.setState({adoptOrFoster: e.target.value})}>
+                                    <option>Select One</option>
                                     <option>Adopt</option>
                                     <option>Foster</option>
                                 </Input>

@@ -7,13 +7,12 @@ import Memory from '../Petpage/Memory';
 
 // PROPS TYPE ALIAS
 type AcceptedProps = {
-    id: any
     token: any
-    state: any
-    match: any
     clearToken: any
+    id: any // PASSES ACTIVE PET ID
+    match: any // REQUIRED FOR PASSING ACTIVE PET ID AS PROPS
+    state: any
 };
-
 
 class Petpage extends React.Component<AcceptedProps, {}> {
     constructor(props: AcceptedProps){

@@ -5,13 +5,15 @@ import APIURL from '../../helpers/environment';
 
 // PROPS TYPE ALIAS
 type AcceptedProps = {
-    updateToken: (newToken: string) => void
+    updateToken: (newToken: string) => void,
+    setUserRole: (role: string) => void 
 };
   
 // STATE TYPE ALIAS
 type SigninState = {
     email: string,
     password: string,
+    userRole: string,
     incPassword: boolean,
     emailNotExist: boolean
 };
@@ -22,6 +24,7 @@ class Signin extends React.Component<AcceptedProps, SigninState>{
         this.state = {
           email: '',
           password: '',
+          userRole: '',
           incPassword: false,
           emailNotExist: false
         }
@@ -40,13 +43,9 @@ class Signin extends React.Component<AcceptedProps, SigninState>{
             (response) => response.json()
         ) .then((data) => {
             console.log(data);
-            // if(data.error === 'bad gateway'){
-            //     this.setState({incPassword: true})
-            // }
-
-            // if(data.error === 'failed to authenticate'){
-            //     this.setState({emailNotExist: true})
-            // }
+            console.log(data.user.role)
+            
+            this.props.setUserRole(data.user.role)
 
             this.props.updateToken(data.sessionToken)
         })
