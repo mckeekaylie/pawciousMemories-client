@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
+
+/* ALL ELEMENTS */
+.home {
+    margin-top: 4em;
+}
+
+/* PAGE TOP */
+#myPets {
+    text-align: center;
+    font-family: Rochester, cursive;
+    font-weight: 500;
+    font-size: 5em;
+    padding: .5em;
+}
+
+.btn {
+    display: block;
+    margin: auto;
+    margin-bottom: 2em;
+    background-color: #7165B1;
+    border: none;
+    font-weight: 500;
+}
+
+.btn:hover {
+    background-color: #37539B;
+    border: none;
+}
+
+/* PET SECTION */
+.petCol {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 3em;
+}
+
+.petCard {
+    height: 20em;
+    border: none;
+}
+
+.card {    
+    text-align: center;
+}
+
+.card:hover {
+    cursor: pointer;
+}
+
+.card-img {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.petName {
+    font-family: Raleway, sans-serif;
+    font-weight: 700;
+    font-size: 1.5em;
+    top: 0;
+}
+
+#petNameContainer {
+    background-color: #BBCBFE;
+    padding: .5em;
+    height: 3em;
+}

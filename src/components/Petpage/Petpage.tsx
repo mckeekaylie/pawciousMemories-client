@@ -12,7 +12,6 @@ type AcceptedProps = {
     state: any
     match: any
     clearToken: any
-    modalOff: boolean
 };
 
 
@@ -26,7 +25,7 @@ class Petpage extends React.Component<AcceptedProps, {}> {
     render(){
         return(
             <div>
-                {/* <Sitebar clearToken={this.props.clearToken}/> */}
+                <Sitebar clearToken={this.props.clearToken}/> 
                 <Petinfo id={this.props.match.params.petId} token={this.props.token} />
                 <Memory id={this.props.match.params.petId} token={this.props.token}/>
                 <Photogallery id={this.props.match.params.petId} token={this.props.token} />

@@ -1,34 +1,79 @@
 import React from 'react';
+import {  Col,  Card,  CardImg,CardGroup} from 'reactstrap';
+import APIURL from '../../helpers/environment';
+import './Photogallery.css'
 
 // PROPS TYPE ALIAS
 type AcceptedProps = {
-    token: any
-    id: any
-};
-  
-// STATE TYPE ALIAS
-type SignupState = {
-    email: string,
-    password: string,
-    role: string
+    token: any,
+    id: number
 };
 
-class Photogallery extends React.Component<AcceptedProps, SignupState> {
-    constructor(props: AcceptedProps){
-        super(props);
-        this.state = {
-          email: '',
-          password: '',
-          role: 'user'
+// STATE TYPE ALIAS
+type PhotoGalleryState = {  
+    imgArray: any
+};
+
+class Photogallery extends React.Component<AcceptedProps, PhotoGalleryState> {
+     constructor(props: AcceptedProps){
+       super(props);
+       this.state = {
+         imgArray: []
         }
-      }
-      
-    render(){
-        return(
-            <div>
-                
-            </div>
-        )
     }
+
+  componentDidMount = () => {
+      this.fetchPhotoGallery();
+  }
+
+  // FETCHING USER'S ENTIRE PHOTO GALLERY FOR THIS PET
+  fetchPhotoGallery() {
+    const that = this;
+      fetch(`${APIURL}/gallery/image`, {
+        method: 'GET',
+         headers: new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': this.props.token
+        })
+    }) .then((res) => res.json())
+      .then((PhotoGallery) => {
+        that.setState({
+            imgArray: PhotoGallery
+        })
+        console.log(PhotoGallery)
+        console.log(that.state.imgArray)
+    })
+  }
+
+  // isActivePet(){
+  //   if(this.state.imgArray.title == this.state.pet.name){
+  //     return true;
+  //   }
+  // }
+    
+
+    render() {
+
+    // this.state.imgArray.filter(this.isActivePet());
+
+    // IMAGE MAPPER  
+    const imageMapper = this.state.imgArray.map((petImage: any) =>
+      <Col md='4' className='petCol'>
+          <Card className='petCard'>  
+              <CardImg width="100%" height="100%" src={petImage.file} alt="Card image cap"  />
+          </Card>
+      </Col>          
+    )
+
+    return (
+        <div className='galleryBody'>
+          <h1>Photos of</h1>
+            <CardGroup>
+                {imageMapper}
+            </CardGroup>
+        </div>
+    )
+
+    }    
 }
 export default Photogallery;

@@ -1,6 +1,9 @@
 import React from 'react';
+import Taco from './Tacos'
 import Signup from '../Auth/Signup';
 import Signin from './Signin';
+import '../Auth/Auth.css'
+
 
 // PROPS TYPE ALIAS
 type TokenProps = {
@@ -37,7 +40,8 @@ class Auth extends React.Component<TokenProps, ToggleState> {
     
     render(){
         return (
-        <div>
+        <div className='authBody'>
+                <Taco/>
             <h1 id='appTitle'>Pawcious Memories</h1>
             <div>
                 {this.state.showLogin ?

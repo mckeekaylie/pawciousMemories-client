@@ -1,8 +1,7 @@
 import React from 'react';
-// import { BrowserRouter, withRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
-import APIURL from '../../helpers/environment'
-import Sitebar from '../Sitebar'
-import {Button, Form, FormGroup, Label, Col, Input, Modal, ModalHeader, ModalBody, ModalFooter, Card, CardImg, CardBody, CardTitle, CardGroup} from 'reactstrap'
+import APIURL from '../../helpers/environment';
+import {Button, Form, FormGroup, Col, Row, Input, Modal, ModalHeader, ModalBody, Card, CardImg, CardBody, CardGroup} from 'reactstrap';
+import './Memory.css';
 
 //PROPS TYPE ALIAS
 type AcceptedProps = {
@@ -12,20 +11,37 @@ type AcceptedProps = {
 
 //STATE TYPE ALIAS
 type MemoryState = {
+    // TOKEN 
     token: string
-    pet: any
-    showPetPage: boolean
-    petId: string
-    memoryId: number
-    memoryIndex: number
 
+    // FROM PET INFO
+    pet: any
+    
+    // STATES FOR MEMORIES
+        // HOLDS ALL OF THE USER'S MEMORIES WHEN PULLED THROUGH GET
+        memoryContainer: any
+    
+         // HOLDS A SINGLE MEMORY
+        memory: string
+    
+        // MEMORY MAPPER
+        memoryToMap: Array<any>
+        
+        // HOLDS THE MEMORY'S ID, USED FOR PUT/DELETE
+        memoryId: number
+
+        // EDIT MEMORY
+        editMemory: any
+
+    // MODAL
     editModalOpen: boolean
     modalOpen: boolean
+
+    // FOR TRACKING IMAGE UPLOADS
     file: any
-    newFile: any
-    memoryContainer: any
-    memory: string
-    memoryToMap: Array<any>
+
+    // FIRES WHEN DELETE IS CLICKED, SAVES THE PET TO BE DELETED
+    petMemOwner: string   
 }
 
 class Memory extends React.Component<AcceptedProps, MemoryState> {
@@ -34,21 +50,23 @@ class Memory extends React.Component<AcceptedProps, MemoryState> {
         this.state = {
             token: '',
             pet: [],
-            showPetPage: false,
-            petId: '',
-            memoryId: 0,
-            memoryIndex: 0,
-            
-            editModalOpen: false,
-            modalOpen: false,
-            file: '',
-            newFile: '',
+
+            // MEMORIES
             memoryContainer: [],
             memory: '',
-            memoryToMap: []
+            memoryToMap: [],
+            memoryId: 0,
+            editMemory: [],
+            
+            // MODALS
+            editModalOpen: false,
+            modalOpen: false,
+            
+            file: '',
+            petMemOwner: ''
         }
     }
-
+    
     // SETTING TOKEN AND CALLING FETCH MEMORY
     componentDidMount() {
         this.setState({
@@ -58,7 +76,7 @@ class Memory extends React.Component<AcceptedProps, MemoryState> {
         this.fetchMemory()
         this.fetchPetinfo()
     }
-
+    
     // FETCH PET
     fetchPetinfo () {
         const that = this;
@@ -75,7 +93,7 @@ class Memory extends React.Component<AcceptedProps, MemoryState> {
             })
         })
     }
-
+    
     // FETCH MEMORIES
     fetchMemory(){
         const that=this;
@@ -95,12 +113,12 @@ class Memory extends React.Component<AcceptedProps, MemoryState> {
             console.log(this.state.memoryContainer);
         })
     }
-
+    
     // CREATE A NEW MEMORY
     handleSubmit = (event: any) => {
         event.preventDefault();
         let formData = new FormData();
-        formData.append('pet', this.state.pet)
+        formData.append('pet', this.state.pet.name)
         formData.append('memory', this.state.memory)
         formData.append('file', this.state.file)
         
@@ -112,13 +130,16 @@ class Memory extends React.Component<AcceptedProps, MemoryState> {
             })
         })
         .then((res) => res.json())
-        .then((newMemory) => console.log(newMemory));
-        this.setState({
-            modalOpen: false
-        })
+        .then((newMemory) => {
+            console.log(newMemory)
+            this.setState({
+                modalOpen: false
+            })
+        }
+        );
     }
-
-    // DELETE A MEMORY
+    
+    // DELETE MEMORY
     deleteMemory = (e: any, memId: any) => {
         e.preventDefault();
         console.log(memId);
@@ -133,14 +154,13 @@ class Memory extends React.Component<AcceptedProps, MemoryState> {
         .then((newMemory) => console.log(newMemory));
     } 
 
-    //EDIT A MEMORY
+    // EDIT MEMORY
     editMemory = (e: any) => {
         e.preventDefault();
         let formData = new FormData();
-        formData.append('pet', this.state.pet)
-        formData.append('memory', this.state.memory)
+        formData.append('pet', this.state.pet.name)
+        formData.append('memory', this.state.editMemory)
         formData.append('file', this.state.file)
-
         fetch(`${APIURL}/memories/memory/${this.state.memoryId}`, {
             method: 'PUT',
             body: formData,
@@ -155,6 +175,14 @@ class Memory extends React.Component<AcceptedProps, MemoryState> {
         })
     }
 
+    // SET MEMORY TO EDIT
+    editPetMem = (editPet: any) => {
+        this.setState({
+            editMemory: editPet
+        })
+        console.log(editPet)
+    }
+    
     // MEMORY IMAGE STATE
     MemoryImage = (e: any) => {
         this.setState({
@@ -162,75 +190,77 @@ class Memory extends React.Component<AcceptedProps, MemoryState> {
         });
     }
 
-    // isActivePet(){
-    //     if(this.state.memoryContainer.memory.pet == this.state.pet.name){
-    //       return true;
-    //     }
-    //   }
-
     render() {
-        // this.state.memoryContainer.filter(this.isActivePet());
-        const memoryMapper = this.state.memoryContainer.map((memoryToMap: any) =>
-        <Col md='4'>
-            <Card>
-            <CardImg width="100%" height="100%" src={memoryToMap.file} alt="Card image cap"/>
-            <CardBody>
-            <p>{memoryToMap.memory}</p>
-            </CardBody>
-            <Button color='info' onClick={(e) => {
-                this.setState({
-                    memoryId: memoryToMap.id,
-                    editModalOpen: true
-                })
-                console.log(this.state.memoryId)
+        // FILTER MEMORIES ARRAY TO ONLY DISPLAY ACTIVE PET
+        let filteredMem = this.state.memoryContainer.filter((memToFilter: any) => {
+            if(memToFilter.pet == this.state.pet.name){
+                return memToFilter
             }
-            }>Edit</Button>
-            <Button color="danger" onClick={(e) => {
-                this.setState({
-                    memoryId: memoryToMap.id,
-                })
-                console.log(this.state.memoryId)
-                this.deleteMemory(e, memoryToMap.id)
-            }
-            }
-            >Delete</Button>
-            
-            </Card>  
+        })
+
+        // MEMORY MAPPER
+        const memoryMapper = filteredMem.map((memoryToMap: any) =>
+            <Col md='4'>
+                <Card>
+                    <CardImg width="100%" height="100%" src={memoryToMap.file} alt="Card image cap"/>
+
+                    <CardBody>
+                    <p>{memoryToMap.memory}</p>
+                    </CardBody>
+
+                    <Row>
+                    <Button id='edit' onClick={(e) => {
+                        this.setState({
+                            memoryId: memoryToMap.id,
+                            editModalOpen: true
+                        })
+                        this.editPetMem(memoryToMap.memory)
+                    }
+                    }>Edit</Button>
+
+                    <Button id='delete' onClick={(e) => {
+                        this.setState({
+                            memoryId: memoryToMap.id,
+                            petMemOwner: memoryToMap.pet
+                        })
+                        console.log(this.state.memoryId)
+                        console.log(this.state.petMemOwner)
+                        this.deleteMemory(e, memoryToMap.id)
+                    }
+                    }>Delete</Button>
+                    </Row>
+                </Card>  
             </Col>          
-        ) 
+        )
         
         // UPLOAD IMAGE
         const MemoryImage = (e: any) => {
             this.setState({ file: e.target.files[0] });
         }
-
+        
         // TOGGLE MODAL OFF
         const toggle = () => this.setState({modalOpen: false});
 
-        console.log(this.state.pet.id)
-        console.log(this.state.memoryId)
-        
         return(
-            <div className='home'>
+        <div className='memoriesBody'>
+
+            <h1 id='myMemsWith'>My Memories with {this.state.pet.name}</h1>
     
-            <h1 style={{padding: '.5em'}}>My Memories with {this.state.pet.name}</h1>
+            <Button style={{marginTop: '2em', marginBottom: '2em'}} onClick={(e) => this.setState({modalOpen: true})}>Add A Memory!</Button>
     
-                    <Button class='addMemory' color="primary" onClick={(e) => this.setState({modalOpen: true})}>Add A Memory!</Button>
-                    {/* <Button class='editMemory' color="info" onClick={(e) => this.setState({editModalOpen: true})}>Edit Memory!</Button> */}
-    
-                    <CardGroup>
-                        {memoryMapper}
-                    </CardGroup>
+            <CardGroup>
+                {memoryMapper}
+            </CardGroup>
     
     
-                    {/* ADD-MEMORY-MODAL */}
-                    {this.state.modalOpen ? 
-                    <Modal isOpen={true} toggle={toggle}>
-                        <ModalHeader toggle={toggle}>Add A Memory!</ModalHeader>
+            {/* ADD MEMORY MODAL */}
+            {this.state.modalOpen ? 
+                <Modal isOpen={true} toggle={toggle}>
+                    <ModalHeader toggle={toggle}>Add A Memory!</ModalHeader>
                         <ModalBody>
                             <Form encType="multipart/form-data" onSubmit={(e) => this.handleSubmit(e)}>
                                 <FormGroup>
-                                    <Input type='text' placeholder='Pet Name' name='pet' value={this.state.pet.name} onChange={(e) => this.setState({pet: e.target.value})} />
+                                    <Input type='text' value={this.state.pet.name} name='pet'/>
                                 </FormGroup>
                                 <FormGroup>
                                     <Input type='textarea' placeholder='Memory' name='memory' onChange={(e) => this.setState({memory: e.target.value})} />
@@ -241,21 +271,21 @@ class Memory extends React.Component<AcceptedProps, MemoryState> {
                                 <Button type='submit'>Create Memory!</Button>
                             </Form>
                         </ModalBody>
-                    </Modal>
-                    : null
-                    } 
-                    
-                    {/* EDIT-MEMORY-MODAL */}
-                    {this.state.editModalOpen ? 
-                    <Modal isOpen={true} toggle={toggle}>
-                        <ModalHeader toggle={toggle}>Edit Your Memory!</ModalHeader>
+                </Modal>
+            : null
+            } 
+
+            {/* EDIT MEMORY MODAL */}
+            {this.state.editModalOpen ? 
+                <Modal isOpen={true} toggle={toggle}>
+                    <ModalHeader toggle={toggle}>Edit Your Memory!</ModalHeader>
                         <ModalBody>
                             <Form encType="multipart/form-data" onSubmit={(e) => this.editMemory(e)}>
                                 <FormGroup>
-                                    <Input type='text' placeholder='Pet Name' name='pet' value={this.state.pet.name} onChange={(e) => this.setState({pet: e.target.value})} />
+                                    <Input type='text' value={this.state.pet.name} />
                                 </FormGroup>
                                 <FormGroup>
-                                    <Input type='textarea' placeholder='Memory' name='memory' onChange={(e) => this.setState({memory: e.target.value})} />
+                                    <Input type='textarea' value={this.state.editMemory} name='memory' onChange={(e) => this.setState({editMemory: e.target.value})} />
                                 </FormGroup>
                                 <FormGroup>
                                     <Input type='file' name='petImage' onChange={e => MemoryImage(e)} />
@@ -263,12 +293,13 @@ class Memory extends React.Component<AcceptedProps, MemoryState> {
                                 <Button type='submit'>Edit Memory!</Button>
                             </Form>
                         </ModalBody>
-                    </Modal>
-                    : null
-                    } 
+            </Modal>
+            : null
+            }
+        
+        </div>
+        )
 
-                </div>
-            )
-        }
     }
+}
 export default Memory;
