@@ -1,44 +1,50 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Pawcious Memories
 
-## Available Scripts
+What is Pawcious Memories?
+Pawcious Memories is an app for pet owners to utilize to remember their current and former pets either adopted or fostered. Users can add pets, which creates a profile page of the pet. On the profile page, users can edit the pet's information (date of birth, date of adoption, breed, etc.), add memories of the pet, and add images of the pet. 
 
-In the project directory, you can run:
+Why was Pawcious Memories created?
+The team behind Pawcious Memories are current and former pet owners who have witnessed firsthand how important pets and the memories they have with them are to family. As years pass, it becomes more and more difficult to remember memories and details about pets. As a result, the team decided to create Pawcious Memories so that all pet owners have an easy solution to store their pets and remember them. 
 
-### `npm start`
+Features
+Home page:
+1. Displays all pets the user has added
+2. The user can sort between all pets, adopted pets, and fostered pets by clicking buttons for each
+3. The user can add a new pet by clicking the 'Add a pet!' button that opens a modal for the user to enter the new pet's information
+4. The user can click on a pet, which then directs the user to that pet's profile page
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Pet profile page:
+1. The user can see and update the pet's information at the top
+2. The user can see a memories section that displays all memories the user has added for that pet. The user can also add a memory by clicking the 'Add a memory' button. Memories can be edited or deleted.
+3. The user can see a photo gallery section that displays pictures the user has added for that pet. Pictures can be added by clicking the 'Add an image' button and deleted by clicking 'Delete image' below the picture
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Technology used:
+Pawcious Memories is a React app (version 16.8.6) that also utilizes TypeScript. The UI is built utilizing reactstrap and antd.
+The final application is deployed in Heroku at pawciousmemories-client.herokuapp.com.
 
-### `npm test`
+The server behind Pawcious Memories is build in Node.js and utilizes Sequelize and Express.js.
+The server is deployed in Heroku at pawciousmemories-server.herokuapp.com and the Git repository is located at github.com/mckeekaylie/pawciousMemories-server
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To use this repo:
+1. Click the green Clone or download button and copy the link provided
+2. Open terminal/command prompt on your machine and navigate to where you wish to store the project
+3. Enter git clone followed by the link you copied
+4. Run npm install to ensure you have the required dependencies installed
 
-### `npm run build`
+Credits:
+APIs we used on the signin screen:
+1. https://github.com/evz/tacofancy-api
+2. https://sv443.net/jokeapi
+3. https://www.boredapi.com/documentation
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Fonts:
+1. https://fonts.google.com/specimen/Rochester?query=rochester
+2. https://fonts.google.com/specimen/Raleway?query=ralew
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Graphics:
+1. The logout icon is provided by Flaticon, artist Pixel Perfect
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+And special thanks to Stack Overflow for helping us debug many issues. :)
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+The team:
+mckeekaylie, Kcprater, AngieB77
