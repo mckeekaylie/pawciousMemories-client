@@ -4,6 +4,7 @@ import Signup from '../Auth/Signup';
 import Signin from './Signin';
 import Bored from './Bored';
 import Taco from './Taco';
+import Jokes from './Jokes';
 import './Auth.css';
 
 // PROPS TYPE ALIAS
@@ -57,7 +58,7 @@ class Auth extends React.Component<TokenProps, ToggleState> {
                 <Col></Col>
                 <Col><Bored /></Col>
                 <Col><Taco /></Col>
-                <Col></Col>
+                <Col><Jokes /></Col>
                 <Col></Col>
             </Row>
         </div>
