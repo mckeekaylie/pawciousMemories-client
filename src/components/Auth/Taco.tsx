@@ -1,4 +1,4 @@
-// KRIS'S COMPONENT
+// KRIS' COMPONENT
 import React from 'react';
 import { Modal, Button } from 'antd';
 import 'antd/dist/antd.css';
