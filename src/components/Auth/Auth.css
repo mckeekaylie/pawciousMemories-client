@@ -1,6 +1,7 @@
 html {
     overflow-y: scroll;
 }
+
 .authBody {
     height: 100vh;
     background-image: url('../../assets/bkgd.png');

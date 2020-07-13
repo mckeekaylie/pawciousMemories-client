@@ -30,7 +30,7 @@ class Taco extends React.Component<TacoProps, TacoState> {
 
   componentDidMount = () => {
     const getTaco = () => {
-      fetch(`http://taco-randomizer.herokuapp.com/random/`, {
+      fetch(`http://taco-randomizer.herokuapp.com/random/`,{
         method: 'GET',
       }) .then((result) => result.json())
       .then((tacoData) => {
@@ -61,7 +61,7 @@ class Taco extends React.Component<TacoProps, TacoState> {
       <div>
         <Button className='sillyBtn' onClick={(e) => {
             this.showModal()
-            this.componentDidMount()
+            // this.componentDidMount()
         }}>Click For Tacos!
         </Button>
         

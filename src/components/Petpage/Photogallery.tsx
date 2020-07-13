@@ -1,19 +1,24 @@
 import React from 'react';
-import { Col,  Card, Modal, ModalBody, Form, Input, ModalHeader, FormGroup, Button, CardImg,CardGroup, Container} from 'reactstrap';
+import { Col,  Card, Modal, ModalBody, Form, Input, ModalHeader, FormGroup, Button, CardImg, CardGroup} from 'reactstrap';
 import APIURL from '../../helpers/environment'
+
 // PROPS TYPE ALIAS
 type AcceptedProps = {
     token: any,
     id: number
 };
+
 // STATE TYPE ALIAS
 type PhotoGalleryState = {  
-    pet: any,
+    pet: any, // HOLDS ALL OF THE USER'S PETS WHEN FETCHED FROM THE SERVER
     petName: string,
-    imgArray: any,
-    file: string,
+    imgArray: any, // HOLDS ALL OF THE USER'S IMAGES WHEN FETCHED FROM THE SERVER
+    file: string, // HOLDS THE IMAGE TO UPLOAD IN THE POST FUNCTION
+
+    // EVENT STATE VARIABLES
     modalOpen: boolean
 };
+
 class Photogallery extends React.Component<AcceptedProps, PhotoGalleryState> {
      constructor(props: AcceptedProps){
        super(props);
@@ -25,6 +30,8 @@ class Photogallery extends React.Component<AcceptedProps, PhotoGalleryState> {
          modalOpen: false
         }
     }
+
+  // CALLING FETCH PET INFO & FETCH PHOTO GALLERY
   componentDidMount = () => {
     this.fetchPetinfo();
     this.fetchPhotoGallery();
@@ -68,6 +75,8 @@ class Photogallery extends React.Component<AcceptedProps, PhotoGalleryState> {
         console.log(that.state.imgArray)
     })
   }
+
+  // ADD NEW IMAGE
   postImage = (e: any) => {
     e.preventDefault();
     let formData = new FormData();
@@ -91,32 +100,35 @@ class Photogallery extends React.Component<AcceptedProps, PhotoGalleryState> {
         console.log(that.state.file)
     })
   }
- deleteImage = (e:any, imgId: any) => {
-     e.preventDefault();
-         fetch(`${APIURL}/gallery/image/${imgId}` , {
-        method: 'DELETE',
-         headers: new Headers({
-            'Content-Type': 'application/json',
-            'Authorization': this.props.token
-        })
-    }).then((res) => res.json())
-      .then((deletedImage) => console.log(deletedImage))
-        }
 
-  //add new image
+  // DELETE IMAGE
+  deleteImage = (e:any, imgId: any) => {
+      e.preventDefault();
+          fetch(`${APIURL}/gallery/image/${imgId}` , {
+          method: 'DELETE',
+          headers: new Headers({
+              'Content-Type': 'application/json',
+              'Authorization': this.props.token
+          })
+      }).then((res) => res.json())
+        .then((deletedImage) => console.log(deletedImage))
+  }
+
+  // ADD NEW IMAGE HANDLER
   handleImageUpload(e: any) {
     e.preventDefault();
     this.setState({
         file: e.target.files[0]
     })
-} 
-    render() {
+  } 
+
+  render() {
     // FILTER IMAGE ARRAY TO ONLY DISPLAY ACTIVE PET
     let filteredImgs = this.state.imgArray.filter((imgToFilter: any) => {
       if(imgToFilter.title == this.state.pet.name){
           return imgToFilter
       }
-      })
+    })
 
     // IMAGE MAPPER  
     const imageMapper = filteredImgs.map((petImage: any) =>
@@ -133,8 +145,8 @@ class Photogallery extends React.Component<AcceptedProps, PhotoGalleryState> {
 
     return (
         <div>
-          <h1 style={{textAlign: 'center', marginTop: '1em'}}>Photos of {this.state.pet.name}</h1>
-            <Button onClick={(e) => this.setState({modalOpen: true})}>Add Image</Button>
+          <h1 style={{textAlign: 'center', marginTop: '1em', fontFamily: 'Raleway, sans-serif'}}>Photos of {this.state.pet.name}</h1>
+            <Button style={{marginBottom: '2em', fontFamily: 'Raleway, sans-serif'}} onClick={(e) => this.setState({modalOpen: true})}>Add Image</Button>
 
             <CardGroup>
                 {imageMapper}
@@ -159,8 +171,7 @@ class Photogallery extends React.Component<AcceptedProps, PhotoGalleryState> {
             : null
             } 
         </div>
-        
-    )
+      )
     }    
 }
 export default Photogallery;

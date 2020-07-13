@@ -23,9 +23,9 @@ class Bored extends React.Component<BoredProps, BoredState> {
     // FETCH RANDOM ACTIVITY
     fetchBoredActivity(){
         const that = this;
-        fetch(`http://www.boredapi.com/api/activity/`, {
+        fetch(`http://www.boredapi.com/api/activity/`,{
             method: 'GET',
-        }) .then((res) => res.json())
+        }).then((res) => res.json())
 
         .then((boredData) => {
             that.setState({
@@ -61,7 +61,7 @@ class Bored extends React.Component<BoredProps, BoredState> {
     render() {
         return(
             <div>
-                <Button className='sillyBtn' style={{backgroundColor: '#37539B'}} onClick={(e) => {
+                <Button className='sillyBtn' onClick={(e) => {
                     this.showModal()
                     this.fetchBoredActivity()
                 }} >Bored? Spawn a random activity.</Button>

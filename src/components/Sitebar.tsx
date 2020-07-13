@@ -2,7 +2,6 @@ import React from 'react';
 import {
     Navbar,
     NavbarBrand,
-    Nav,
     NavItem
 } from 'reactstrap';
 
@@ -28,4 +27,3 @@ class Sitebar extends React.Component<TokenProps, {}>{
     }
 }
 export default Sitebar;
-

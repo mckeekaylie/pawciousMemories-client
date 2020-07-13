@@ -203,7 +203,7 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
                     <ModalBody>
                         <Form encType="multipart/form-data" onSubmit={(e) => this.handlePetEdit(e)}>
                             <FormGroup>
-                                <Input type='text' value={this.state.editPetName} name='name' onChange={(e) => this.setState({editPetName: e.target.value})} />
+                                <Input type='text' value={this.state.editPetName} name='name'/>
                             </FormGroup>
                             <FormGroup>
                                 <Input type='text' value={this.state.editPetSpecies} name='species' onChange={(e) => this.setState({editPetSpecies: e.target.value})} />
@@ -222,6 +222,7 @@ class Petinfo extends React.Component<AcceptedProps, PetinfoState> {
                             </FormGroup>
                             <FormGroup>
                                 <Input type='select' value={this.state.editAdoptOrFoster} name='adoptOrFoster' onChange={(e) => this.setState({editAdoptOrFoster: e.target.value})}>
+                                    <option>Select One</option>
                                     <option>Adopt</option>
                                     <option>Foster</option>
                                 </Input>
